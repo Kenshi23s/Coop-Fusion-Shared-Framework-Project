@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Movement
 {
-    public bool ig;
+    public bool isGrounded;
     Transform _transform;
     Rigidbody _rb;
     float _jumpForce;
@@ -20,7 +20,7 @@ public class Player_Movement
 
     public void Jump()
     {
-        ig = false;
+        isGrounded = false;
         _rb.AddForce(Vector3.up * _jumpForce, ForceMode.VelocityChange);
     }
 
@@ -36,7 +36,7 @@ public class Player_Movement
     {
         if (collision.gameObject.layer == 6)
         {
-            ig = true;
+            isGrounded = true;
             Debug.Log("Estoy tocando piso");
         }
     }

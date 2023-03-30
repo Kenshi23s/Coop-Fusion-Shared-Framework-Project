@@ -11,25 +11,33 @@ public class PlayerModel : MonoBehaviour , IDamagable
     [SerializeField] float _life;
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
-    [SerializeField] Rigidbody _rb;   
+    [SerializeField] Rigidbody _rb;
 
-
-    void Start()
+    private void Awake()
     {
+        _rb=this.GetComponent<Rigidbody>();
         _movement = new Player_Movement(_speed, _rb, _jumpForce, transform);
         _inputs = new Player_Inputs(_movement);
     }
 
+    void Start()
+    {
+        
+    }
+    private void Update()
+    {
+        _inputs.ListenInputs();
+    }
+
     private void FixedUpdate()
     {
-        _inputs.Inputs();
+        _inputs.PlayInputs();
     }
 
     private void OnCollisionEnter(Collision collider)
     {
         _movement.IsGrounded(collider);
     }
-
 
 
     public void TakeDamage(int dmg)

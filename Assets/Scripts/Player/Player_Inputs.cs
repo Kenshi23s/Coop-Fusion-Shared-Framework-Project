@@ -5,13 +5,16 @@ using UnityEngine;
 public class Player_Inputs
 {
     Player_Movement _movement;
+    float MovV;
+    float MovH;
 
+    bool jump;
     public Player_Inputs(Player_Movement pm)
     {
         _movement = pm;
     }
 
-    public void Inputs()
+    public void ListenInputs()
     {
         var MovV = Input.GetAxis("PlayerVertical");
         var MovH = Input.GetAxis("PlayerHorizontal");
@@ -21,12 +24,26 @@ public class Player_Inputs
             _movement.Move(MovV, MovH);            
         }        
 
-        if (_movement.ig)
+        if (_movement.isGrounded)
         {
             if (Input.GetKey(KeyCode.Space))
-            {               
-                _movement.Jump();
+            {     
+                jump= true;
+                
             }    
+        }
+    }
+
+    public void PlayInputs()
+    {
+        if (MovV != 0 || MovH != 0)
+        {
+            _movement.Move(MovV, MovH);
+        }
+        if (jump)
+        {
+            _movement.Jump();
+            jump= false;
         }
     }
 }
