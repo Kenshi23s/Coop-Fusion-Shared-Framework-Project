@@ -26,10 +26,9 @@ public class Player_Movement
 
     public void Move(float MovV, float MovH)
     {
-        var direction = _transform.forward * MovV;
-        direction += _transform.right * MovH;
-
-        _transform.position += direction * _speed * Time.deltaTime;
+        Vector3 direction = (_transform.forward * MovV) + (_transform.right * MovH);
+  
+        _transform.position += direction.normalized * _speed * Time.deltaTime;
     }
 
     public void IsGrounded(Collision collision)

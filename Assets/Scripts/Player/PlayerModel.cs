@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel : MonoBehaviour , IDamagable
+public class PlayerModel : MonoBehaviour , IDamagable,IModel
 {
 
-    Player_Inputs _inputs;
+    //Player_Inputs _inputs;
     Player_Movement _movement;
 
     [SerializeField] float _life;
@@ -17,21 +17,7 @@ public class PlayerModel : MonoBehaviour , IDamagable
     {
         _rb=this.GetComponent<Rigidbody>();
         _movement = new Player_Movement(_speed, _rb, _jumpForce, transform);
-        _inputs = new Player_Inputs(_movement);
-    }
-
-    void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        _inputs.ListenInputs();
-    }
-
-    private void FixedUpdate()
-    {
-        _inputs.PlayInputs();
+        //_inputs = new Player_Inputs(_movement);
     }
 
     private void OnCollisionEnter(Collision collider)
@@ -45,5 +31,17 @@ public class PlayerModel : MonoBehaviour , IDamagable
         _life -= dmg;
     }
 
+    public void Move(Vector2 input) => _movement.Move(input.y, input.x);
 
+    public void Jump() => _movement.Jump();
+
+    public void Shoot()
+    {
+        Debug.Log("el personaje no tiene disparo");
+    }
+
+    public void Aim(Vector2 input)
+    {
+        Debug.Log("el personaje no tiene apuntado");
+    }
 }

@@ -16,7 +16,7 @@ public class Input_mouse : DroneInput
         _keys.Add(KeyCode.D, NodeDirection.Right);
     }
 
-
+    
 
     protected override bool MovementInput(out NodeDirection direction)
     {

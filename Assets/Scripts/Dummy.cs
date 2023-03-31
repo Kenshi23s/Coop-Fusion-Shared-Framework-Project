@@ -8,6 +8,7 @@ public class Dummy : MonoBehaviour, IDamagable
     public void TakeDamage(int dmg)
     {
         life -= dmg;
+        Debug.Log(life);
         if (life<=0)
         {
             Destroy(this.gameObject);

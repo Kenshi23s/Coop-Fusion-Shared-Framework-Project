@@ -18,7 +18,7 @@ public class Drone_Movement
     Action<Action> AddMethod;
     Action<Action> RemoveMethod;
 
-    public Node actualnode=> _actualNode;
+    public Node actualnode => _actualNode;
     Node _actualNode;
     Node _nextNode;
 
@@ -89,8 +89,8 @@ public class Drone_Movement
 
     void CoolDownDecrease()
     {
-        Debug.Log("cd decrease");
-        Debug.Log(actualCD);
+        //Debug.Log("cd decrease");
+        //Debug.Log(actualCD);
 
         //actualCD = Mathf.Clamp(actualCD - Time.deltaTime, 0, actualCD );
         actualCD = Mathf.Max(actualCD - Time.deltaTime, 0);

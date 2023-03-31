@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Data;
 
 [System.Serializable]
 public struct BulletStats
@@ -10,31 +7,34 @@ public struct BulletStats
    public int bulletdamage;
    public int bulletRadius;
 }
-public class DroneShooting : MonoBehaviour
+public class DroneShooting 
 {
 
-    Camera cam;
+  
     BulletStats bulletStats;
     Action onHit;
     Action onMiss;
 
     public DroneShooting(Camera cam, BulletStats bulletStats, Action onHit, Action onMiss)
     {
-        this.cam = cam;
+        
         this.bulletStats = bulletStats;
         this.onHit = onHit;
         this.onMiss = onMiss;
     }
 
-    public void Shoot(Ray ray)
+    public void Shoot()
     {
+      
         IDamagable target;
-        if (DamagableWasHit(ray, out target))
+        if (DamagableWasHit(Drone_CrossHair.instance.GetCrossHairScreenRay(), out target))
         {
+            Debug.Log("ShootSucces");
             target.TakeDamage(bulletStats.bulletdamage);
             onHit?.Invoke();
             return;
         }
+        Debug.Log("ShootNOTSucces");
         onMiss?.Invoke();
     }
 

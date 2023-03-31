@@ -7,6 +7,7 @@ public abstract class DroneInput
     DroneShooting droneShoot;
     Drone_Movement dronemovement;
     protected Camera cam;
+    IModel myModel;
 
     protected DroneInput(DroneShooting droneShoot, Drone_Movement dronemovement, Camera cam)
     {
@@ -15,13 +16,19 @@ public abstract class DroneInput
         this.cam = cam;
     }
 
-    internal void ListenInput()
+    protected abstract bool ShootInput(out Ray ray);
+    protected abstract bool MovementInput(out NodeDirection direction);
+    public abstract void InputGizmos();
+
+    public void SetModel(IModel model) => myModel = model;
+    
+    public void ListenInputs()
     {
-        Ray ray;
-        if (ShootInput(out ray))
-        {
-            droneShoot.Shoot(ray);
-        }
+        //Ray ray;
+        //if (ShootInput(out ray))
+        //{
+        //    droneShoot.Shoot(ray);
+        //}
 
         NodeDirection direction;
         if (MovementInput(out direction))
@@ -29,8 +36,7 @@ public abstract class DroneInput
             dronemovement.SetDirection(direction);
         }
     }
-    protected abstract bool ShootInput(out Ray ray);
-    protected abstract bool MovementInput(out NodeDirection direction);
-    public abstract void InputGizmos();
-    
+
+    public void PlayPhysicsInputs()   {  }
+  
 }

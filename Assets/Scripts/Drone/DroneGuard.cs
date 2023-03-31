@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DroneGuard : MonoBehaviour
+public class DroneGuard : MonoBehaviour,IModel
 {
     #region DroneComponents
 
@@ -22,7 +22,7 @@ public class DroneGuard : MonoBehaviour
 
     #region Input
 
-    DroneInput _myDroneInput;
+    Drone_CrossHair _myCrosshairDrone;
 
     #endregion
 
@@ -45,17 +45,21 @@ public class DroneGuard : MonoBehaviour
     private void Awake()
     {
         if (_cam==null)
-        {
-            _cam = Camera.main;
-        }
+           _cam = Camera.main;
+        
+        Action<Action> _add = (x) => _everyTick += x;
+        Action<Action> _substract = (x) => _everyTick -= x;
+
         _myShootingDrone = new DroneShooting(_cam, _bulletStats, OnHit, OnMiss);
-        _myMovementDrone = new Drone_Movement(transform,_movementStats,FirstNode, AddToUpdate, SubstractFromUpdate);
-        _myDroneInput = new Input_mouse(_myShootingDrone, _myMovementDrone, _cam);
+        _myMovementDrone = new Drone_Movement(transform,_movementStats,FirstNode, _add, _substract);
+        _myCrosshairDrone = new Drone_CrossHair();
+
+        //_myDroneInput = new Input_mouse(_myShootingDrone, _myMovementDrone, _cam);
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        _myDroneInput.ListenInput();
+        //_myDroneInput.ListenInputs();
   
         _everyTick?.Invoke();
     }
@@ -69,12 +73,24 @@ public class DroneGuard : MonoBehaviour
         }
        
     }
-    void AddToUpdate(Action method)
+
+    public void Move(Vector2 input)
     {
-        _everyTick+= method;
+        _myMovementDrone.SetDirection(Node.GetDirectionNode(input));
     }
-    void SubstractFromUpdate(Action method)
+
+    public void Jump()
     {
-        _everyTick -= method;
+        Debug.Log( "El dron no tiene Salto" );
+    }
+
+    public void Shoot()
+    {
+        _myShootingDrone.Shoot();
+    }
+
+    public void Aim(Vector2 input)
+    {
+       Drone_CrossHair.instance.AddCrossHairPos(input);
     }
 }

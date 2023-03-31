@@ -1,9 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public interface IController
+public abstract class Controller : MonoBehaviour
 {
-    void SetModel(IModel model);
-    void InputShoot();
+    protected IModel model;
+
+    protected float x;
+    protected float y;
+   
+    
+
+    Action onPlayInput;
+    Action onPhysicsPlayInput;
+
+    public void SetModel(IModel model) => this.model = model;
+    private void Awake()
+    {
+        SetModel(GetComponentInChildren<IModel>());
+    }
+
+    private void Update()
+    {
+        ListenInputs();
+        onPlayInput?.Invoke();
+        onPlayInput=null;
+    }
+
+    public void FixedUpdate()
+    {
+        onPhysicsPlayInput?.Invoke();
+        onPhysicsPlayInput=null;
+    }
+    protected void AddToPlayPhysics(Action action) => onPhysicsPlayInput += action;
+
+    protected void AddToPlay(Action action) => onPlayInput += action;  
+
+    protected abstract void ListenInputs();
+    
+
 }
