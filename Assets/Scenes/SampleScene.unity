@@ -281,10 +281,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb36f70287f1b564b8d5b9f8ab86ad79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   _life: 100
   _speed: 10
   _jumpForce: 5
-  _rb: {fileID: 75600714}
+  _rb: {fileID: 75600719}
 --- !u!114 &75600718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +308,7 @@ MonoBehaviour:
     RawGuidValue: 5743bebb6bba4b089e8f012556e74396
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 75600717}
   - {fileID: 75600719}
   SimulationBehaviours: []
 --- !u!114 &75600719

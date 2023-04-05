@@ -11,17 +11,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        instance= this;
+        instance = this;
         DroneWaypoints = ColomboMethods.GetChildrenComponents<Transform>(this.transform).ToList();
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }
