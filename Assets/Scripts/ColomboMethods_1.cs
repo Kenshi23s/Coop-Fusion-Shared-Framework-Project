@@ -190,6 +190,29 @@ namespace FacundoColomboMethods
             return objPosition[nearestIndex];
         }
 
+        public static Transform GetNearest(Transform[] objPosition, Vector3 myPos)
+        {
+            int nearestIndex = 0;
+
+            float nearestMagnitude = (objPosition[0].position - myPos).magnitude;
+
+            for (int i = 1; i < objPosition.Length; i++)
+            {
+                float tempMagnitude = (objPosition[i].position - myPos).magnitude;
+
+                if (nearestMagnitude > tempMagnitude)
+                {
+                    nearestMagnitude = tempMagnitude;
+                    nearestIndex = i;
+                }
+
+            }
+
+            return objPosition[nearestIndex];
+        }
+
+
+
         //public static T CheckNearest<T>(Transform[] objPosition, Vector3 myPos)
         //{
         //    int nearestIndex = 0;
