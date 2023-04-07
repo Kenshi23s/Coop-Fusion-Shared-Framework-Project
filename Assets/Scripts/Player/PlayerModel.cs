@@ -1,12 +1,12 @@
 using Fusion;
 using UnityEngine;
 
-public class PlayerModel : NetworkBehaviour , IDamagable,IModel
+public class PlayerModel : NetworkBehaviour , IDamagable, IModel
 {
 
     //Player_Inputs _inputs;
     Player_Movement _movement;
-
+    
     [SerializeField] float _life;
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
@@ -18,10 +18,8 @@ public class PlayerModel : NetworkBehaviour , IDamagable,IModel
         
         _movement = new Player_Movement(_speed, _rb.Rigidbody, _jumpForce, transform);
         //_inputs = new Player_Inputs(_movement);
-    }
-
-  
-
+    }  
+    
 
     public void TakeDamage(int dmg)
     {
@@ -45,5 +43,10 @@ public class PlayerModel : NetworkBehaviour , IDamagable,IModel
     private void OnCollisionEnter(Collision collider)
     {
         _movement.IsGrounded(collider);
+    }
+
+    public bool inputAuthority()
+    {
+        return HasInputAuthority;
     }
 }

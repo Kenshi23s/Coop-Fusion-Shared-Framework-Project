@@ -10,7 +10,7 @@ public class NetworkPlayer : NetworkBehaviour
 
     public override void Spawned()
     {
-        //Si somos el local
+        //Si somos el local tenemos la autoridad de los inputs
         if (Object.HasInputAuthority)
         {
             Local = this;

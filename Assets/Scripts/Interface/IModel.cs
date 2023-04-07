@@ -8,6 +8,6 @@ public interface IModel
     void Aim(Vector2 input);
     void Jump();
     void Shoot();
-
+    bool inputAuthority();
 
 }

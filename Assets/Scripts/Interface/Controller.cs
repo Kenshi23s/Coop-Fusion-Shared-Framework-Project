@@ -1,14 +1,15 @@
 using System;
 using UnityEngine;
+using Fusion;
 
-public abstract class Controller : MonoBehaviour
+public abstract class Controller : NetworkBehaviour
 {
     protected IModel model;
 
     protected float x;
     protected float y;
-   
-    
+
+
 
     Action onPlayInput;
     Action onPhysicsPlayInput;
@@ -19,23 +20,24 @@ public abstract class Controller : MonoBehaviour
         SetModel(GetComponentInChildren<IModel>());
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
-        ListenInputs();
-        onPlayInput?.Invoke();
-        onPlayInput=null;
-    }
 
-    public void FixedUpdate()
-    {
-        onPhysicsPlayInput?.Invoke();
-        onPhysicsPlayInput=null;
+        if (GetInput(out NetworkInputData networkInputData))
+        {
+            ListenInputs();
+            onPlayInput?.Invoke();
+            onPlayInput = null;
+            onPhysicsPlayInput?.Invoke();
+            onPhysicsPlayInput = null;
+        }
+
     }
     protected void AddToPlayPhysics(Action action) => onPhysicsPlayInput += action;
 
-    protected void AddToPlay(Action action) => onPlayInput += action;  
+    protected void AddToPlay(Action action) => onPlayInput += action;
 
     protected abstract void ListenInputs();
-    
+
 
 }

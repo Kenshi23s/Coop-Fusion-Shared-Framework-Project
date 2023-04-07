@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class DroneGuard : MonoBehaviour,IModel
+public class DroneGuard : NetworkBehaviour , IModel
 {
     #region DroneComponents
 
@@ -94,5 +95,10 @@ public class DroneGuard : MonoBehaviour,IModel
     public void Aim(Vector2 input)
     {
         _myCrosshairDrone.AddCrossHairPos(input);
+    }
+
+    public bool inputAuthority()
+    {
+        return HasInputAuthority;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Controller_Mouse : Controller
 {
-
+    
     [SerializeField] KeyCode shoot;
     [SerializeField] KeyCode jump;
 
@@ -15,24 +15,20 @@ public class Controller_Mouse : Controller
     {
         //podria tener un metodo de awake y sumarle estos metodos a un action ahi,
         //pero para que quede mas legible decidi dejarlo asi 
-        MoveListen();
+        //MoveListen();
         AimListen();
         ShootListen();
         JumpListen();
-    }
-  
+    } 
    
 
-    void MoveListen()
+    void MoveListen(float x, float y)
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
         if (x != 0 || y != 0)
         {
             AddToPlayPhysics(() => model.Move(new Vector2(x, y)));
             //Debug.Log($"x es {x}, e y es {y}");
-        }
-       
+        }       
     }
 
     void ShootListen()
