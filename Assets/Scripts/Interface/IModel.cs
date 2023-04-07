@@ -6,8 +6,8 @@ public interface IModel
 {
     void Move(Vector2 input);
     void Aim(Vector2 input);
-    void Jump();
-    void Shoot();
-    bool inputAuthority();
+    void Jump(bool arg);
+    void Shoot(bool arg);
+    bool InputAuthority();
 
 }

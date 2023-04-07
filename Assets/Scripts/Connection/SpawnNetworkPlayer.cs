@@ -10,7 +10,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     //el prefab del player debera tener el componente de network object para que pueda ser compartido en red
     [SerializeField] NetworkPlayer _playerPrefab;
     [SerializeField] NetworkPlayer _dronePrefab;
-    CharacterInputHandler _characterInputHandler;
+    Controller _inputHandler;
 
     // PARA VER: Para spawnear al elegir boton Player o boton Drone, deberia elegir q prefab quiere instanciar
     
@@ -31,14 +31,16 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         if (!NetworkPlayer.Local) return;
+        NetworkInputData data;
 
-        if (!_characterInputHandler)
+        if (!_inputHandler)
         {
-            _characterInputHandler = NetworkPlayer.Local.GetComponent<CharacterInputHandler>();
+            _inputHandler = NetworkPlayer.Local.GetComponent<Controller>();
         }
-        else
+        else if(_inputHandler.ListenInputs(out data))
         {
-            input.Set(_characterInputHandler.GetNetworkInput());
+            
+            input.Set(data);
         }
     }
 

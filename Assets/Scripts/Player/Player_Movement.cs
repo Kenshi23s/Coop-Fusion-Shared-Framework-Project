@@ -27,8 +27,8 @@ public class Player_Movement
     public void Move(float MovV, float MovH)
     {
         Vector3 direction = (_transform.forward * MovV) + (_transform.right * MovH);
-  
-        _transform.position += direction.normalized * _speed * Time.deltaTime;
+
+        _rb.MovePosition(_transform.position + direction.normalized * _speed * Time.fixedDeltaTime);
     }
 
     public void IsGrounded(Collision collision)

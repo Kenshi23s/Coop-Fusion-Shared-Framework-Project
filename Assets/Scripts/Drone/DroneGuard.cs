@@ -77,28 +77,15 @@ public class DroneGuard : NetworkBehaviour , IModel
        
     }
 
-    public void Move(Vector2 input)
-    {
-        _myMovementDrone.SetDirection(Node.GetDirectionNode(input));
-    }
+    public void Move(Vector2 input) => _myMovementDrone.SetDirection(Node.GetDirectionNode(input));
+   
+    public void Jump(bool arg) => Debug.Log("El dron no tiene Salto");
 
-    public void Jump()
-    {
-        Debug.Log( "El dron no tiene Salto" );
-    }
+    public void Shoot(bool arg) { if (arg) _myShootingDrone.Shoot(); }
 
-    public void Shoot()
-    {
-        _myShootingDrone.Shoot();
-    }
+    public void Aim(Vector2 input) { _myCrosshairDrone.AddCrossHairPos(input); }
 
-    public void Aim(Vector2 input)
-    {
-        _myCrosshairDrone.AddCrossHairPos(input);
-    }
+    public bool InputAuthority() => HasInputAuthority;
 
-    public bool inputAuthority()
-    {
-        return HasInputAuthority;
-    }
+  
 }
