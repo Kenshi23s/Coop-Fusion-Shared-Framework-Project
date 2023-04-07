@@ -7,12 +7,12 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NetworkRunner))]
 
-public class NetworkRunnerHandler : MonoBehaviour
+public class NetworkRunnerHandler : NetworkBehaviour
 {
     NetworkRunner _networkRunner;
     [SerializeField] Scene _scene;
 
-    private void Start()
+    private void Awake()
     {
         _networkRunner = GetComponent<NetworkRunner>();
 
@@ -26,7 +26,7 @@ public class NetworkRunnerHandler : MonoBehaviour
         var sceneObject = runner.GetComponent<NetworkSceneManagerDefault>();
 
          return runner.StartGame(new StartGameArgs
-        {
+         {
             GameMode = gamemode,
             Scene = scene,
             SessionName = "GameSession",

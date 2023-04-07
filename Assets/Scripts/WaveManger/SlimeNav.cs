@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 //RequireComponent[typeof(Rigidbody)]
 [RequireComponent(typeof(NavMeshAgent))]
-public class ZombieNav : Entity
+public class SlimeNav : Entity
 {
 
     NavMeshAgent thisAgent;

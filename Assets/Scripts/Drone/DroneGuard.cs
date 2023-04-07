@@ -50,9 +50,11 @@ public class DroneGuard : MonoBehaviour,IModel
         Action<Action> _add = (x) => _everyTick += x;
         Action<Action> _substract = (x) => _everyTick -= x;
 
-        _myShootingDrone = new DroneShooting(_cam, _bulletStats, OnHit, OnMiss);
-        _myMovementDrone = new Drone_Movement(transform,_movementStats,FirstNode, _add, _substract);
         _myCrosshairDrone = new Drone_CrossHair();
+        //primero genero el crosshair pq despues se lo paso al shooting
+        _myShootingDrone = new DroneShooting(_cam, _bulletStats, OnHit, OnMiss, _myCrosshairDrone);
+        _myMovementDrone = new Drone_Movement(transform,_movementStats,FirstNode, _add, _substract);
+      
 
         //_myDroneInput = new Input_mouse(_myShootingDrone, _myMovementDrone, _cam);
     }
@@ -91,6 +93,6 @@ public class DroneGuard : MonoBehaviour,IModel
 
     public void Aim(Vector2 input)
     {
-       Drone_CrossHair.instance.AddCrossHairPos(input);
+        _myCrosshairDrone.AddCrossHairPos(input);
     }
 }

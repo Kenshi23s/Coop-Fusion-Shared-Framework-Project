@@ -8,11 +8,13 @@ public class ZombieManager : NetworkBehaviour
 {
   
     public static ZombieManager instance;
+    
 
-    [SerializeField] ZombieNav model;
+    [SerializeField] SlimeNav model;
     //PoolObject<ZombieNav> zombiePool = new PoolObject<ZombieNav>();
 
-    List<ZombieNav> zombiesList = new List<ZombieNav>();
+   [SerializeField,Tooltip("Solo lectura, no tocar")] 
+   List<SlimeNav> zombiesList = new List<SlimeNav>();
 
     Transform[] spawns;
 
@@ -26,12 +28,13 @@ public class ZombieManager : NetworkBehaviour
     //[SerializeField] PlayerEntity Player;
     public Vector3 playerPos => GameManager.instance.model.transform.position;
 
-    private void Awake()
+    private void Start()
     {
       
         instance = this;
         spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);
         //zombiePool.Intialize(TurnOnZombie, TurnOffZombie, BuildZombie);
+        Debug.Log("Runner");
         SpawnZombie();
     }
 
@@ -50,17 +53,17 @@ public class ZombieManager : NetworkBehaviour
 
         while (zombiesAlive <= maxZombies)
         {
-            ZombieNav zombie = BuildZombie();
-            zombiesList.Add(zombie);
-            zombie.transform.position = NearestSpawn();
+            SlimeNav Slime = BuildSlime();
+            zombiesList.Add(Slime);
+            Slime.transform.position = NearestSpawn();
         }
     }
     
     #region Pool
-    void TurnOnZombie(ZombieNav z) => z.gameObject.SetActive(true);
+    void TurnOnZombie(SlimeNav z) => z.gameObject.SetActive(true);
 
 
-    void TurnOffZombie(ZombieNav z)
+    void TurnOffZombie(SlimeNav z)
     {
         //z.des
         //zombiesList.Remove(z);
@@ -68,7 +71,12 @@ public class ZombieManager : NetworkBehaviour
         SpawnZombie();
     }
 
-    ZombieNav BuildZombie() => Runner.Spawn(model);
+    SlimeNav BuildSlime()
+    {
+        Debug.Log(model);
+        Debug.Log(Runner);
+        return Runner.Spawn(model);
+    } 
     //{
     //    ZombieNav zombie = Runner.Spawn(model);
     //    //zombie.InitializeZombie(ReturnZombie);

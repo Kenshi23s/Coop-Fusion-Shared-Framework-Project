@@ -5,16 +5,18 @@ public class Drone_CrossHair
 {
     public static Sprite crosshair_Sprite;
     public static float speed=1000;
-    public static Drone_CrossHair instance;
+    //public static Drone_CrossHair instance;
 
     Image Crosshair;
 
     public Drone_CrossHair()
     {
-        instance = this;
+        //instance = this;
+        // no deberia usar tags, pero por el momento...
         Crosshair = GameObject.Find("Crosshair").GetComponent<Image>();
         if (Crosshair!=null)
         {
+            Debug.Log("crosshair!=null");
             Crosshair.color = Color.red;
         }
         Crosshair.sprite = crosshair_Sprite;
@@ -23,13 +25,13 @@ public class Drone_CrossHair
     public void AddCrossHairPos(Vector2 newPos)
     {
         Vector3 newdir = new Vector3(newPos.x, newPos.y,0) - Crosshair.transform.position;
+        //si la os
         if (newdir.magnitude < 6)
             return;
-
+        // una de las variables para calcular mi velocidad va a ser la magnitud, asi si estoy mas lejos me muevo mas rapido
         float t = newdir.magnitude * speed * Time.deltaTime;
         Vector3 addPos = Crosshair.transform.position + newdir.normalized;
         Crosshair.transform.position = Vector3.Slerp(Crosshair.transform.position, addPos, t);
-
 
         Crosshair.transform.position = CheckOutOfBounds(Crosshair.transform.position);
 
@@ -38,7 +40,7 @@ public class Drone_CrossHair
 
 
     }
-
+    //chequea que la mira no se pase de la pantalla
     Vector3 CheckOutOfBounds(Vector2 myPos)
     {
         float x = Mathf.Clamp(myPos.x,0,Screen.width);

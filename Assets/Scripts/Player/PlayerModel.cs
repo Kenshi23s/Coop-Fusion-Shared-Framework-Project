@@ -11,18 +11,16 @@ public class PlayerModel : NetworkBehaviour , IDamagable,IModel
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
     [SerializeField] NetworkRigidbody _rb;
+    //[SerializeField] Camera camera;
 
     private void Awake()
     {
-       
+        
         _movement = new Player_Movement(_speed, _rb.Rigidbody, _jumpForce, transform);
         //_inputs = new Player_Inputs(_movement);
     }
 
-    private void OnCollisionEnter(Collision collider)
-    {
-        _movement.IsGrounded(collider);
-    }
+  
 
 
     public void TakeDamage(int dmg)
@@ -42,5 +40,10 @@ public class PlayerModel : NetworkBehaviour , IDamagable,IModel
     public void Aim(Vector2 input)
     {
         Debug.Log("el personaje no tiene apuntado");
+    }
+
+    private void OnCollisionEnter(Collision collider)
+    {
+        _movement.IsGrounded(collider);
     }
 }
