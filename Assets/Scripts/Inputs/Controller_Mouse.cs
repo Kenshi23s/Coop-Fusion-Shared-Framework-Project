@@ -18,6 +18,7 @@ public class Controller_Mouse : Controller
         if (!model.InputAuthority())
         {
             data = default;
+            Debug.Log("NO TENGO AUTORIDAD DE INPUT");
             return false;
 
         }
@@ -35,6 +36,7 @@ public class Controller_Mouse : Controller
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
+        Debug.Log(x+"  " + y);
         return new Vector2(x, y);
 
         //if (x != 0 || y != 0)

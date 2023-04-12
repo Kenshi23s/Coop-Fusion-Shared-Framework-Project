@@ -17,7 +17,7 @@ public class DroneGuard : NetworkBehaviour , IModel
     #region Movement Components
          Drone_Movement _myMovementDrone;
          [SerializeField] DroneMovementStats _movementStats;
-         [SerializeField] Node FirstNode;
+         [SerializeField] Node firstNode;
 
     #endregion
 
@@ -45,8 +45,16 @@ public class DroneGuard : NetworkBehaviour , IModel
 
     private void Awake()
     {
-        if (_cam==null)
-           _cam = Camera.main;
+        if (_cam != null)
+        {
+            Destroy(Camera.main);
+            Camera.SetupCurrent(_cam);
+            firstNode = GameManager.instance.firstNode;
+            transform.position=firstNode.transform.position;
+
+
+        }
+          
         
         Action<Action> _add = (x) => _everyTick += x;
         Action<Action> _substract = (x) => _everyTick -= x;
@@ -54,7 +62,7 @@ public class DroneGuard : NetworkBehaviour , IModel
         _myCrosshairDrone = new Drone_CrossHair();
         //primero genero el crosshair pq despues se lo paso al shooting
         _myShootingDrone = new DroneShooting(_cam, _bulletStats, OnHit, OnMiss, _myCrosshairDrone);
-        _myMovementDrone = new Drone_Movement(transform,_movementStats,FirstNode, _add, _substract);
+        _myMovementDrone = new Drone_Movement(transform,_movementStats, firstNode, _add, _substract);
       
 
         //_myDroneInput = new Input_mouse(_myShootingDrone, _myMovementDrone, _cam);

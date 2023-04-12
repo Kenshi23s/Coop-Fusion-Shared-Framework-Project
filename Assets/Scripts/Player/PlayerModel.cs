@@ -1,21 +1,29 @@
 using Fusion;
 using UnityEngine;
 
+[RequireComponent(typeof(NetworkRigidbody))]
 public class PlayerModel : NetworkBehaviour , IDamagable, IModel
 {
 
-    //Player_Inputs _inputs;
     Player_Movement _movement;
     
     [SerializeField] float _life;
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
-    [SerializeField] NetworkRigidbody _rb;
-    //[SerializeField] Camera camera;
+    [SerializeField] NetworkRigidbody _ntwkRb;
+
+    [SerializeField] Camera _cam;
 
     private void Awake()
-    {      
-        _movement = new Player_Movement(_speed, _rb.Rigidbody, _jumpForce, transform);
+    {
+        _ntwkRb = GetComponent<NetworkRigidbody>();
+        _movement = new Player_Movement(_speed, _ntwkRb, _jumpForce, transform);
+        GameManager.instance.SetPlayer(this);
+        if (_cam!=null)
+        {
+            Destroy(Camera.main);
+            Camera.SetupCurrent(_cam);
+        }
         //_inputs = new Player_Inputs(_movement);
     }  
     

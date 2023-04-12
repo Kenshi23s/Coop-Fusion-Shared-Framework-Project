@@ -1,3 +1,4 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,11 @@ public class Player_Movement
 {
     public bool isGrounded;
     Transform _transform;
-    Rigidbody _rb;
+    NetworkRigidbody _rb;
     float _jumpForce;
     float _speed;
 
-    public Player_Movement(float s, Rigidbody rb, float jf, Transform t)
+    public Player_Movement(float s, NetworkRigidbody rb, float jf, Transform t)
     {
         _speed = s;
         _rb = rb;
@@ -21,14 +22,14 @@ public class Player_Movement
     public void Jump()
     {
         isGrounded = false;
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.VelocityChange);
+        _rb.Rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.VelocityChange);
     }
 
     public void Move(float MovV, float MovH)
     {
         Vector3 direction = (_transform.forward * MovV) + (_transform.right * MovH);
 
-        _rb.MovePosition(_transform.position + direction.normalized * _speed * Time.fixedDeltaTime);
+        _rb.Rigidbody.MovePosition(_transform.position +(direction.normalized * _speed * Time.deltaTime));
     }
 
     public void IsGrounded(Collision collision)

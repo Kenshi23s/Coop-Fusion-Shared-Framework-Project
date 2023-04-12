@@ -29,11 +29,12 @@ public class Drone_Movement
        this._actualNode = _actualNode;
        this.AddMethod = AddMethod;
        this.RemoveMethod = RemoveMethod;
+     
 
 
 
         actualCD = 0;
-        myTransform.position=actualnode.transform.position;
+        //myTransform.position=actualnode.transform.position;
    }
 
     public bool CanMove() => actualCD <= 0 ? true : false;

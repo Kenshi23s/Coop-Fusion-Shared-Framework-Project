@@ -4,45 +4,98 @@ using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using UnityEngine.UI;
 
 public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 {
+    [Header("Prefabs")]
     [SerializeField] NetworkPlayer _playerPrefab;
     [SerializeField] NetworkPlayer _dronePrefab;
-    [SerializeField] GameObject _panel;
 
-    Controller _inputHandler;
+    [Header("UI")]
+    [SerializeField] GameObject _panel;
+    [SerializeField] Text _loadingText;
+
+    static Controller _inputHandler;
     NetworkRunner _currentRunner;
-    
+    private void Awake()
+    {
+        StartCoroutine(TextCoroutine());
+    }
     public void OnConnectedToServer(NetworkRunner runner)
     {
         _currentRunner = runner;
         //Pregunta si nuestra topologia es shared, y si es, le pide al network runner que instancie en red  el prefab del player, en el spawn quq queramos.
        if(runner.Topology == SimulationConfig.Topologies.Shared)
-        {
+       {
             Debug.Log("[Custom Msg] On Connected To Server - Spawning Player as Local...");
 
             //lo de runner.LocalPlayer es para decirle que el local player (el jugador que entró) va a tener la autoridad de mandarle inputs al prefab del player.
-
+            StopCoroutine(TextCoroutine());
+            Destroy(_loadingText);
             _panel.gameObject.SetActive(true);
+            
+       }
+    }
+    IEnumerator TextCoroutine()
+    {
+        int count = 0;
+    
+
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            count++;
+            if (_loadingText!=null)
+            {
+                _loadingText.text += ".";
+                if (count > 3)
+                {
+                    _loadingText.text = "Loading";
+                    count = 0;
+                }
+            }
+            else
+            {
+                break;
+            }
+            
         }
     }
-
     //cada metodo se le asigna al boton correspondiente
 
-    public void SpawnPlayer()
+    //public void SpawnPlayer()
+    //{
+    //    _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+    //    _panel.gameObject.SetActive(false);
+    //}
+
+    //public void SpawnDrone()
+    //{
+    //    _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+    //    _panel.gameObject.SetActive(false);
+    //}
+
+    public void SpawnPlayer(bool arg)
     {
-        _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-        _panel.gameObject.SetActive(false);
+        if (arg)
+        {
+            _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+        }
+        else if(!arg)
+        {
+            _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+        }
+       
+
+        Destroy(_panel.gameObject);
+        //_panel.gameObject.SetActive(false);
     }
 
-    public void SpawnDrone()
+    public static void SetInputController(Controller _newController)
     {
-        _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-        _panel.gameObject.SetActive(false);
+        _inputHandler = _newController;
     }
-
-
 
     //aca irian los inputs del jugador
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -52,86 +105,86 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 
         if (!_inputHandler)
         {
-            _inputHandler = NetworkPlayer.Local.GetComponent<Controller>();
+            //_inputHandler = NetworkPlayer.Local.GetComponent<Controller>();
+            Debug.Log("no habia handler D:");
         }
-        else if(_inputHandler.ListenInputs(out data))
+        else if (_inputHandler.ListenInputs(out data))
         {
-            
+            Debug.Log("Listen");
             input.Set(data);
         }
     }
-
     #region CALLBACKS SIN USAR
 
 
     public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
     {
-        throw new NotImplementedException();
+      
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnDisconnectedFromServer(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
     {
-        throw new NotImplementedException();
+      
     }   
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        throw new NotImplementedException();
+      
     }
 
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
     {
-        throw new NotImplementedException();
+       
     }
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+    
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        throw new NotImplementedException();
+       
     }
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
-        throw new NotImplementedException();
+      
     }
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
-        throw new NotImplementedException();
+        
     }
 
     #endregion

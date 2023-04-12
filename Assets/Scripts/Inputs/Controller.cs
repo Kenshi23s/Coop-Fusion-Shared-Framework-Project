@@ -35,6 +35,7 @@ public abstract class Controller : NetworkBehaviour
                 //onPhysicsPlayInput = null;
             }
         };
+        SpawnNetworkPlayer.SetInputController(this);
     }
 
     private void Update()

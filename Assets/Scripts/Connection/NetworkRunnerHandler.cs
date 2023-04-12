@@ -5,9 +5,9 @@ using Fusion;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
-[RequireComponent(typeof(NetworkRunner))]
 
-public class NetworkRunnerHandler : NetworkBehaviour
+[RequireComponent(typeof(NetworkRunner))]
+public class NetworkRunnerHandler : MonoBehaviour
 {
     NetworkRunner _networkRunner;
     [SerializeField] Scene _scene;
