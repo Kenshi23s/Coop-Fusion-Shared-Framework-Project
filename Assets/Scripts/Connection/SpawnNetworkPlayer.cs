@@ -7,24 +7,41 @@ using System;
 
 public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 {
-    //el prefab del player debera tener el componente de network object para que pueda ser compartido en red
     [SerializeField] NetworkPlayer _playerPrefab;
     [SerializeField] NetworkPlayer _dronePrefab;
-    Controller _inputHandler;
+    [SerializeField] GameObject _panel;
 
-    // PARA VER: Para spawnear al elegir boton Player o boton Drone, deberia elegir q prefab quiere instanciar
+    Controller _inputHandler;
+    NetworkRunner _currentRunner;
     
     public void OnConnectedToServer(NetworkRunner runner)
     {
+        _currentRunner = runner;
         //Pregunta si nuestra topologia es shared, y si es, le pide al network runner que instancie en red  el prefab del player, en el spawn quq queramos.
        if(runner.Topology == SimulationConfig.Topologies.Shared)
         {
             Debug.Log("[Custom Msg] On Connected To Server - Spawning Player as Local...");
 
             //lo de runner.LocalPlayer es para decirle que el local player (el jugador que entró) va a tener la autoridad de mandarle inputs al prefab del player.
-            runner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+
+            _panel.gameObject.SetActive(true);
         }
     }
+
+    //cada metodo se le asigna al boton correspondiente
+
+    public void SpawnPlayer()
+    {
+        _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+        _panel.gameObject.SetActive(false);
+    }
+
+    public void SpawnDrone()
+    {
+        _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+        _panel.gameObject.SetActive(false);
+    }
+
 
 
     //aca irian los inputs del jugador
