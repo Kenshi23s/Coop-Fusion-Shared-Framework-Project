@@ -11,7 +11,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     [Header("Prefabs")]
     [SerializeField] NetworkPlayer _playerPrefab;
     [SerializeField] NetworkPlayer _dronePrefab;
-
+  
     [Header("UI")]
     [SerializeField] GameObject _panel;
     [SerializeField] Text _loadingText;
@@ -25,8 +25,9 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
         _currentRunner = runner;
+       
         //Pregunta si nuestra topologia es shared, y si es, le pide al network runner que instancie en red  el prefab del player, en el spawn quq queramos.
-       if(runner.Topology == SimulationConfig.Topologies.Shared)
+       if (runner.Topology == SimulationConfig.Topologies.Shared)
        {
             Debug.Log("[Custom Msg] On Connected To Server - Spawning Player as Local...");
 
@@ -92,6 +93,8 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         //_panel.gameObject.SetActive(false);
     }
 
+   
+
     public static void SetInputController(Controller _newController)
     {
         _inputHandler = _newController;
@@ -106,11 +109,11 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         if (!_inputHandler)
         {
             //_inputHandler = NetworkPlayer.Local.GetComponent<Controller>();
-            Debug.Log("no habia handler D:");
+            Debug.LogError("no habia handler D:");
         }
         else if (_inputHandler.ListenInputs(out data))
         {
-            Debug.Log("Listen");
+          
             input.Set(data);
         }
     }

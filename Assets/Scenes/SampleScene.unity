@@ -501,7 +501,6 @@ GameObject:
   m_Component:
   - component: {fileID: 329877360}
   - component: {fileID: 329877359}
-  - component: {fileID: 329877358}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -509,14 +508,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &329877358
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 329877357}
-  m_Enabled: 1
 --- !u!20 &329877359
 Camera:
   m_ObjectHideFlags: 0
@@ -2037,9 +2028,9 @@ MonoBehaviour:
   Flags: 2561
   NetworkGuid:
     RawGuidValue: af0158ecefd94e8098d753599adb33fa
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 2014901946}
+  NestedObjects:
+  - {fileID: 2014901948}
+  NetworkedBehaviours: []
   SimulationBehaviours: []
 --- !u!4 &1436880948
 Transform:
@@ -2793,6 +2784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2014901947}
   - component: {fileID: 2014901946}
+  - component: {fileID: 2014901948}
   m_Layer: 0
   m_Name: WaveManager
   m_TagString: Untagged
@@ -2815,7 +2807,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   model: {fileID: 7759255043673928932, guid: ed176d84c2507104580e4072ed3bb50c, type: 3}
   slimeList: []
-  maxZombies: 12
+  maxSlimes: 12
 --- !u!4 &2014901947
 Transform:
   m_ObjectHideFlags: 0
@@ -2834,6 +2826,30 @@ Transform:
   m_Father: {fileID: 1436880948}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2014901948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014901944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: be416670666749959fded2d2586051a9
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2014901946}
+  SimulationBehaviours: []
 --- !u!1 &2056274097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2940,12 +2956,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2068925806}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2068925806
 Transform:

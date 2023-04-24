@@ -204,7 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _life: 100
-  _speed: 10
+  _speed: 30
   _jumpForce: 5
   _ntwkRb: {fileID: 7298470164935906385}
   _cam: {fileID: 5767532634917206661}

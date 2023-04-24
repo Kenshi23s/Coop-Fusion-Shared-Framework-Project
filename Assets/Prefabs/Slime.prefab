@@ -70,8 +70,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  explosionRadius: 0
-  _hitRange: 0
+  explosionRadius: 10
+  _hitRange: 3
 --- !u!114 &100757557587815290
 MonoBehaviour:
   m_ObjectHideFlags: 0

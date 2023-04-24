@@ -21,6 +21,7 @@ public class Player_Movement
 
     public void Jump()
     {
+        Debug.Log("Jump");
         isGrounded = false;
         _rb.Rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.VelocityChange);
     }
@@ -29,7 +30,7 @@ public class Player_Movement
     {
         Vector3 direction = (_transform.forward * MovV) + (_transform.right * MovH);
 
-        _rb.Rigidbody.MovePosition(_transform.position +(direction.normalized * _speed * Time.deltaTime));
+        _rb.Rigidbody.MovePosition(_transform.position + (direction.normalized * _speed * Time.deltaTime));
     }
 
     public void IsGrounded(Collision collision)

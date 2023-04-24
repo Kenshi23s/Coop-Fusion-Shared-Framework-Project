@@ -10,7 +10,6 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
   
     public static ZombieManager instance;
 
-    NetworkRunner myRunner;
 
     [SerializeField] SlimeNav model;
     //PoolObject<ZombieNav> zombiePool = new PoolObject<ZombieNav>();
@@ -24,10 +23,17 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     //public float zombieDamage;
 
     [SerializeField]
-     int maxZombies;
-    
+     int maxSlimes;
 
-    //[SerializeField] PlayerEntity Player;
+    public override void Spawned()
+    {
+        base.Spawned();
+       
+        SpawnSlime();
+
+    }
+
+
     public Vector3 playerPos => GameManager.instance.model.transform.position;
 
     private void Awake()
@@ -35,6 +41,7 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
       
         instance = this;
         spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);
+     
         //zombiePool.Intialize(TurnOnZombie, TurnOffZombie, BuildZombie);
         //SpawnZombie();
     }
@@ -43,9 +50,10 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void SpawnSlime()
     {
-        if (!(myRunner.Topology == SimulationConfig.Topologies.Shared))
+     
+        if (Object.Runner.Topology != SimulationConfig.Topologies.Shared)
             return;
-
+     
         //for (int i = zombiesAlive; i < maxZombies; i++)
         //{
         //    ZombieNav zombie = BuildZombie();
@@ -54,7 +62,7 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
         //    zombie.transform.position = NearestSpawn();
         //}
 
-        while (zombiesAlive <= maxZombies)
+        while (maxSlimes > zombiesAlive)
         {
             SlimeNav Slime = BuildSlime();
             slimeList.Add(Slime);
@@ -77,31 +85,28 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     SlimeNav BuildSlime()
     {
-        Debug.Log(model);
-        Debug.Log(myRunner);
-        return myRunner.Spawn(model);
+        return Object.Runner.Spawn(model);
     }
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        if (myRunner==null)
-        {
-            myRunner = runner;
-            Debug.Log(myRunner);
-        }
+        Debug.Log("zmanagert");
        
         SpawnSlime();
+
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-       
+        Debug.Log("Player Join");
+        SpawnSlime();
+        if (runner.SessionInfo.PlayerCount>1)
+        {
+           
+        }
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-       
-    }
+   
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
@@ -168,6 +173,11 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner)
     {
         
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        throw new NotImplementedException();
     }
     //{
     //    ZombieNav zombie = Runner.Spawn(model);

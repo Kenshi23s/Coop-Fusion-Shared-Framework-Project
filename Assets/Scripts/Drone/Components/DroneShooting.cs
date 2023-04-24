@@ -42,15 +42,23 @@ public class DroneShooting
 
     bool DamagableWasHit(Ray ray, out IDamagable damagable)
     {
-        RaycastHit hit;
-        
-        if (Physics.SphereCast(ray, bulletStats.bulletRadius, out hit, Mathf.Infinity))
+        //RaycastHit[] OnSight = Physics.SphereCastAll(ray, bulletStats.bulletRadius, out RaycastHit hit, Mathf.Infinity);
+        RaycastHit[] OnSight = Physics.SphereCastAll(ray, bulletStats.bulletRadius);
+      
+        if (OnSight.Length > 0)
         {
-            damagable = hit.transform.GetComponent<IDamagable>();
-            //deberia tener al player en otra layer en vez de hacer esto cada vez q impacto un "Damagable"¿?
-            if (damagable != null&& !hit.transform.TryGetComponent(out PlayerModel p))            
-                return true;            
+            
+            foreach (RaycastHit item in OnSight)
+            {
+                if (item.transform.TryGetComponent(out IDamagable target))
+                {
+                    Debug.Log(target);
+                    damagable = target;
+                    return true;
+                }
+            }
         }
+      
 
         damagable = null;
         return false;

@@ -23,13 +23,13 @@ public class SlimeNav : Entity
     {
         thisAgent = GetComponent<NavMeshAgent>();
     }
-    void Update()
+    public override void FixedUpdateNetwork()
     {
+        base.FixedUpdateNetwork();
         thisAgent.SetDestination(ZombieManager.instance.playerPos);
-        float distance = (ZombieManager.instance.playerPos - transform.position).magnitude;
-        if (distance <= _hitRange)
+        if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange)
         {
-            //logica golpe
+            AOEdmg();
         }
     }
 
@@ -37,17 +37,6 @@ public class SlimeNav : Entity
 
    
 
-    protected override void Die()
-    {
-
-
-        Runner.Despawn(Object);
-            
-
-
-
-
-    }
 
     void AOEdmg()
     {
@@ -58,20 +47,29 @@ public class SlimeNav : Entity
         // foreach (IDamagable item in coliders)       
         //    item.TakeDamage(_dmg);
 
-
+        Debug.Log("AOE");
         //herejia, ilegible. Lo dejo por el meme nomas
-        foreach (IDamagable item in Physics.OverlapSphere(transform.position, explosionRadius).
+        IDamagable[] targets = Physics.OverlapSphere(transform.position, explosionRadius).
         Where((x) => TryGetComponent(out IDamagable target)).
-        Select(x => x.GetComponent<IDamagable>()))
+        Select(x => x.GetComponent<IDamagable>()).ToArray();
+        if (targets.Length>0)
         {
-            item.TakeDamage(_dmg);
-
-        }
-
+            foreach (var item in targets)
+            {
+                item.TakeDamage(_dmg);
+            }
+        }       
+     
         Die();
     }
-    //public void SetHardpoint(HardPoint hp)=> this.hp = hp;
 
+
+    protected override void Die()
+    {
+        Debug.Log("Die");
+        Object.Runner.Despawn(Object);
+       
+    }
 
     private void OnDrawGizmos()
     {

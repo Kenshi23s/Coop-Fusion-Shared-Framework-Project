@@ -29,8 +29,8 @@ public class Drone_CrossHair
         if (newdir.magnitude < 6)
             return;
         // una de las variables para calcular mi velocidad va a ser la magnitud, asi si estoy mas lejos me muevo mas rapido
-        float t = newdir.magnitude * speed * Time.deltaTime;
-        Vector3 addPos = Crosshair.transform.position + newdir.normalized;
+        float t = newdir.magnitude * 1000 * Time.deltaTime;
+        Vector3 addPos = Crosshair.transform.position + newdir;
         Crosshair.transform.position = Vector3.Slerp(Crosshair.transform.position, addPos, t);
 
         Crosshair.transform.position = CheckOutOfBounds(Crosshair.transform.position);

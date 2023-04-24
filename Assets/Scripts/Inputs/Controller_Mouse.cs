@@ -36,7 +36,6 @@ public class Controller_Mouse : Controller
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
-        Debug.Log(x+"  " + y);
         return new Vector2(x, y);
 
         //if (x != 0 || y != 0)
@@ -54,6 +53,7 @@ public class Controller_Mouse : Controller
 
     protected override bool JumpListen()
     {
+        Debug.Log(Input.GetKeyDown(jump));
         return Input.GetKeyDown(jump);
        //AddToPlayPhysics(() => model.Jump());
     }
