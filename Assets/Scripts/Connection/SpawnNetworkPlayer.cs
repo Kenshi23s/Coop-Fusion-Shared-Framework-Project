@@ -87,10 +87,10 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         {
             _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
         }
-
+        // si hay mas de 2 player, que comienze el juego
         //if ()
         //{
-
+              //inicializaciones
         //}
 
         Destroy(_panel.gameObject);
