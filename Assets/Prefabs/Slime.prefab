@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 100757557587815236}
   - component: {fileID: 7759255043673928932}
   - component: {fileID: 100757557587815290}
+  - component: {fileID: 4979602917212862201}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -70,6 +71,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  life: 0
+  maxLife: 0
   explosionRadius: 10
   _hitRange: 3
 --- !u!114 &100757557587815290
@@ -95,7 +98,38 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7759255043673928932}
+  - {fileID: 4979602917212862201}
   SimulationBehaviours: []
+--- !u!114 &4979602917212862201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100757557587815291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 3437971928627309244}
+  TotalWords: 1
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0
+    _inverse: 0
+    _hash: -814817977
+  StateHashes: 000000006017ac228bd424df9b7e6d8c164c12a2
+  TriggerHashes: 00000000
 --- !u!1001 &100757555978600477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -168,5 +202,10 @@ PrefabInstance:
 --- !u!4 &2899359643689973328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2979533895184479821, guid: 77e592ff4c65fcd4b81488ea70523fcf, type: 3}
+  m_PrefabInstance: {fileID: 100757555978600477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3437971928627309244 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3374277179689069217, guid: 77e592ff4c65fcd4b81488ea70523fcf, type: 3}
   m_PrefabInstance: {fileID: 100757555978600477}
   m_PrefabAsset: {fileID: 0}

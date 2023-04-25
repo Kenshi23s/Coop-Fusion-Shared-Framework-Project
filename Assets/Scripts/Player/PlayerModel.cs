@@ -10,7 +10,7 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
     [SerializeField] float _life;
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
-    [SerializeField] NetworkRigidbody _ntwkRb;
+    [SerializeField] NetworkRigidbody _ntwkRb;    
 
     [SerializeField] Camera _cam;
 

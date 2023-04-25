@@ -9,14 +9,14 @@ public class Player_Movement
     Transform _transform;
     NetworkRigidbody _rb;
     float _jumpForce;
-    float _speed;
+    float _speed;   
 
     public Player_Movement(float s, NetworkRigidbody rb, float jf, Transform t)
     {
         _speed = s;
         _rb = rb;
         _jumpForce = jf;
-        _transform = t;
+        _transform = t;       
     }
 
     public void Jump()
@@ -30,7 +30,7 @@ public class Player_Movement
     {
         Vector3 direction = (_transform.forward * MovV) + (_transform.right * MovH);
 
-        _rb.Rigidbody.MovePosition(_transform.position + (direction.normalized * _speed * Time.deltaTime));
+        _rb.Rigidbody.MovePosition(_transform.position + (direction.normalized * _speed * Time.deltaTime));       
     }
 
     public void IsGrounded(Collision collision)
