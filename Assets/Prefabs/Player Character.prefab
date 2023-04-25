@@ -208,6 +208,7 @@ MonoBehaviour:
   _speed: 50
   _jumpForce: 5
   _ntwkRb: {fileID: 7298470164935906385}
+  playerView: {fileID: 7926263015358093191}
   _cam: {fileID: 5767532634917206661}
 --- !u!114 &7298470164935906385
 MonoBehaviour:
@@ -411,5 +412,10 @@ Animator:
 --- !u!4 &7926263015358057383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400014, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
+  m_PrefabInstance: {fileID: 7926263015358189865}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7926263015358093191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100014, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
   m_PrefabInstance: {fileID: 7926263015358189865}
   m_PrefabAsset: {fileID: 0}

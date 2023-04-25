@@ -87,7 +87,11 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         {
             _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
         }
-       
+
+        //if ()
+        //{
+
+        //}
 
         Destroy(_panel.gameObject);
         //_panel.gameObject.SetActive(false);

@@ -10,14 +10,14 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
     [SerializeField] float _life;
     [SerializeField] float _speed;
     [SerializeField] float _jumpForce;
-    [SerializeField] NetworkRigidbody _ntwkRb;    
-
+    [SerializeField] NetworkRigidbody _ntwkRb;
+    [SerializeField] GameObject playerView;
     [SerializeField] Camera _cam;
 
     private void Awake()
     {
         _ntwkRb = GetComponent<NetworkRigidbody>();
-        _movement = new Player_Movement(_speed, _ntwkRb, _jumpForce, transform);
+        _movement = new Player_Movement(_speed, _ntwkRb, _jumpForce, transform, playerView);
         GameManager.instance.SetPlayer(this);
         if (_cam!=null)
         {
