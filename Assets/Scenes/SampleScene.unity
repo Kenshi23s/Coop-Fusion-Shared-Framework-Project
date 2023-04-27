@@ -1997,9 +1997,9 @@ MonoBehaviour:
   Flags: 2561
   NetworkGuid:
     RawGuidValue: af0158ecefd94e8098d753599adb33fa
-  NestedObjects:
-  - {fileID: 2014901948}
-  NetworkedBehaviours: []
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 2014901946}
   SimulationBehaviours: []
 --- !u!4 &1436880948
 Transform:
@@ -2894,7 +2894,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2014901947}
   - component: {fileID: 2014901946}
-  - component: {fileID: 2014901948}
   m_Layer: 0
   m_Name: WaveManager
   m_TagString: Untagged
@@ -2936,30 +2935,6 @@ Transform:
   m_Father: {fileID: 1436880948}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2014901948
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2014901944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectInterest: 1
-  DefaultInterestGroups: []
-  DestroyWhenStateAuthorityLeaves: 0
-  AllowStateAuthorityOverride: 1
-  AoiPositionSource: {fileID: 0}
-  Flags: 2561
-  NetworkGuid:
-    RawGuidValue: be416670666749959fded2d2586051a9
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 2014901946}
-  SimulationBehaviours: []
 --- !u!1 &2056274097
 GameObject:
   m_ObjectHideFlags: 0
