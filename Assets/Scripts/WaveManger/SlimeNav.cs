@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 //RequireComponent[typeof(Rigidbody)]
-[RequireComponent(typeof(NavMeshAgent))]
+//[RequireComponent(typeof(NavMeshAgent))]
 public class SlimeNav : Entity
 {
 
@@ -14,18 +14,43 @@ public class SlimeNav : Entity
     [SerializeField] float explosionRadius, _hitRange;
     int _dmg;
     //HardPoint hp;
-    
-    
+
+
 
     //public void InitializeZombie(Action<ZombieNav> ReturnMethod) => this.ReturnMethod = ReturnMethod;
-
+    Action Update;
+    
     private void Awake()
     {
-        thisAgent = GetComponent<NavMeshAgent>();
+       
+        if (TryGetComponent(out NavMeshAgent agent))
+        {
+            Destroy(agent);
+            
+        }
+        thisAgent = gameObject.AddComponent<NavMeshAgent>();
+        thisAgent.enabled = false;
+
+        Action Initialize = () =>
+        {
+            thisAgent.enabled = true;
+            Update = SlimeBehaviour;
+        };
+        if (GameManager.instance.PlayerExists)
+        {
+            Initialize.Invoke();
+        }
+        else
+        {
+            GameManager.instance.OnPlayerSet += () => 
+            {
+                Initialize.Invoke();
+            };
+        }
     }
-    public override void FixedUpdateNetwork()
+  
+    void SlimeBehaviour()
     {
-        base.FixedUpdateNetwork();
         thisAgent.SetDestination(ZombieManager.instance.playerPos);
         if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange)
         {
@@ -33,22 +58,16 @@ public class SlimeNav : Entity
         }
     }
 
-    //public void BackToPool() => ReturnMethod(this);
+    public override void FixedUpdateNetwork()
+    {
+        base.FixedUpdateNetwork();
 
-   
-
+        Update?.Invoke();
+    }
 
     void AOEdmg()
     {
-        //manera correcta
-        //IDamagable[] coliders = Physics.OverlapSphere(transform.position, explosionRadius).
-        //    Where((x) => TryGetComponent(out IDamagable target))
-        //   .Select(x => x.GetComponent<IDamagable>()).ToArray();
-        // foreach (IDamagable item in coliders)       
-        //    item.TakeDamage(_dmg);
-
-        Debug.Log("AOE");
-        //herejia, ilegible. Lo dejo por el meme nomas
+     
         IDamagable[] targets = Physics.OverlapSphere(transform.position, explosionRadius).
         Where((x) => TryGetComponent(out IDamagable target)).
         Select(x => x.GetComponent<IDamagable>()).ToArray();
@@ -67,8 +86,11 @@ public class SlimeNav : Entity
     protected override void Die()
     {
         Debug.Log("Die");
-        Object.Runner.Despawn(Object);
-       
+        if (Object.HasStateAuthority) 
+        {
+            ZombieManager.instance.SpawnSlime();
+            Object.Runner.Despawn(Object); 
+        } 
     }
 
     private void OnDrawGizmos()

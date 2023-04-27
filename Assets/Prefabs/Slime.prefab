@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 100757557587815239}
-  - component: {fileID: 100757557587815236}
   - component: {fileID: 7759255043673928932}
   - component: {fileID: 100757557587815290}
   - component: {fileID: 4979602917212862201}
+  - component: {fileID: 8801030877071705297}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -36,28 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &100757557587815236
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100757557587815291}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &7759255043673928932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +108,19 @@ MonoBehaviour:
     _hash: -814817977
   StateHashes: 000000006017ac228bd424df9b7e6d8c164c12a2
   TriggerHashes: 00000000
+--- !u!65 &8801030877071705297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100757557587815291}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9468842, y: 1.783037, z: 1}
+  m_Center: {x: 0.08367157, y: 1.277568, z: 0.27999997}
 --- !u!1001 &100757555978600477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -199,25 +190,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77e592ff4c65fcd4b81488ea70523fcf, type: 3}
---- !u!1 &2555591099495099626 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2455234641922403575, guid: 77e592ff4c65fcd4b81488ea70523fcf, type: 3}
-  m_PrefabInstance: {fileID: 100757555978600477}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &3186009260052708500
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2555591099495099626}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.20433134
-  m_Height: 0.47036746
-  m_Direction: 1
-  m_Center: {x: -0.0029234553, y: 0.1848983, z: 0.03895392}
 --- !u!4 &2899359643689973328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2979533895184479821, guid: 77e592ff4c65fcd4b81488ea70523fcf, type: 3}

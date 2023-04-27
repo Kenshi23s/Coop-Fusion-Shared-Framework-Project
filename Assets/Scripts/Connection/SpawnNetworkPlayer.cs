@@ -18,6 +18,9 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 
     static Controller _inputHandler;
     NetworkRunner _currentRunner;
+
+    public static Action OnGameModeStart;
+
     private void Awake() => StartCoroutine(TextCoroutine());
   
     public void OnConnectedToServer(NetworkRunner runner)
@@ -67,10 +70,18 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         if (arg)
         {
             _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+            if (_currentRunner.SessionInfo.PlayerCount > 1) OnGameModeStart?.Invoke();
         }
         else if(!arg)
         {
             _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+            if (_currentRunner.SessionInfo.PlayerCount > 1) OnGameModeStart?.Invoke();
+
+        }
+
+        if (_currentRunner.SessionInfo.PlayerCount > 1)
+        {
+
         }
         // si hay mas de 2 player, que comienze el juego
         //if ()
@@ -87,7 +98,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     public static void SetInputController(Controller _newController)
     {
         _inputHandler = _newController;
-        Debug.Log("calltrack");
+       
     }
 
     //aca irian los inputs del jugador

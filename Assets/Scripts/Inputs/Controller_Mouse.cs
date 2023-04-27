@@ -53,7 +53,7 @@ public class Controller_Mouse : Controller
 
     protected override bool JumpListen()
     {
-        Debug.Log(Input.GetKeyDown(jump));
+
         return Input.GetKeyDown(jump);
        //AddToPlayPhysics(() => model.Jump());
     }

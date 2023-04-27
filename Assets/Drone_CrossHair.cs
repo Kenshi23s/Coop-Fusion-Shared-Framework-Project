@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Drone_CrossHair
 {
-    public static Sprite crosshair_Sprite;
+  
     public static float speed=1000;
     //public static Drone_CrossHair instance;
 
@@ -14,12 +14,6 @@ public class Drone_CrossHair
         //instance = this;
         // no deberia usar tags, pero por el momento...
         Crosshair = GameObject.Find("Crosshair").GetComponent<Image>();
-        if (Crosshair!=null)
-        {
-            Debug.Log("crosshair!=null");
-            Crosshair.color = Color.red;
-        }
-        Crosshair.sprite = crosshair_Sprite;
     }
  
     public void AddCrossHairPos(Vector2 newPos)

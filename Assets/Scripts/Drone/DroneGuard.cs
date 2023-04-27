@@ -45,6 +45,8 @@ public class DroneGuard : NetworkBehaviour, IModel
 
     private void Awake()
     {
+        if (!HasInputAuthority) return;
+        
         if (_cam != null)
         {
             Destroy(Camera.main);

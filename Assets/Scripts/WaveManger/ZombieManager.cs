@@ -3,6 +3,7 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
@@ -12,85 +13,65 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
 
 
     [SerializeField] SlimeNav model;
-    //PoolObject<ZombieNav> zombiePool = new PoolObject<ZombieNav>();
+    
 
    [SerializeField,Tooltip("Solo lectura, no tocar")] 
    List<SlimeNav> slimeList = new List<SlimeNav>();
 
-    Transform[] spawns;
+   [SerializeField] Transform[] spawns;
 
-    public int zombiesAlive => slimeList.Count;
-    //public float zombieDamage;
+    public int slimesAlive => slimeList.Count;
+
+    public Vector3 playerPos => GameManager.instance.model.transform.position;
 
     [SerializeField]
      int maxSlimes;
 
     public override void Spawned()
     {
-        base.Spawned();
-       
+        if (!Object || !Object.HasStateAuthority)
+            return;
+
         SpawnSlime();
 
     }
 
 
-    public Vector3 playerPos => GameManager.instance.model.transform.position;
+   
 
     private void Awake()
-    {
-      
+    {      
         instance = this;
-        spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);
-     
-        //zombiePool.Intialize(TurnOnZombie, TurnOffZombie, BuildZombie);
-        //SpawnZombie();
+        spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);       
     }
 
-    Vector3 NearestSpawn() => ColomboMethods.GetNearest(spawns, playerPos).position;
+    Vector3 NearestSpawn()
+    {
+        if (GameManager.instance.PlayerExists)       
+          return ColomboMethods.GetNearest(spawns, playerPos).position;
+        
+        else       
+            return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length)).First().position;
+        
+      
+    }
 
     public void SpawnSlime()
-    {
-     
-        if (Object.Runner.Topology != SimulationConfig.Topologies.Shared)
-            return;
-     
-        //for (int i = zombiesAlive; i < maxZombies; i++)
-        //{
-        //    ZombieNav zombie = BuildZombie();
-
-        //    zombiesList.Add(zombie);
-        //    zombie.transform.position = NearestSpawn();
-        //}
-
-        while (maxSlimes > zombiesAlive)
+    {       
+        while (maxSlimes > slimesAlive)
         {
             SlimeNav Slime = BuildSlime();
             slimeList.Add(Slime);
             Slime.transform.position = NearestSpawn();
-            Debug.Log("SpawnSlime");
         }
     }
     
     #region Pool
-    void TurnOnZombie(SlimeNav z) => z.gameObject.SetActive(true);
-
-
-    void TurnOffZombie(SlimeNav z)
-    {
-        //z.des
-        //zombiesList.Remove(z);
-        //z.gameObject.SetActive(false);
-        SpawnSlime();
-    }
-
-    SlimeNav BuildSlime()
-    {
-        return Object.Runner.Spawn(model);
-    }
+    SlimeNav BuildSlime() => Object.Runner.Spawn(model);   
 
     public void OnConnectedToServer(NetworkRunner runner)
     {
-        Debug.Log("zmanagert");
+       
        
         SpawnSlime();
 

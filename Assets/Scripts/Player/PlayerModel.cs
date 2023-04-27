@@ -36,7 +36,7 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
 
     public void Move(Vector2 input) => _movement.Move(input.y, input.x);
 
-    public void Jump(bool arg) {/*if(arg) _movement.Jump();*/ } 
+    public void Jump(bool arg) { if (arg) _movement.Jump(); } 
 
     public void Shoot(bool arg) => Debug.Log("el personaje no tiene disparo");
 

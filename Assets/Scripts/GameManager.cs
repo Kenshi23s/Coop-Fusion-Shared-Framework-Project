@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,10 +14,27 @@ public class GameManager : MonoBehaviour
 
     public PlayerModel model=> _model;
 
-    [SerializeField]PlayerModel _model;
-    // Start is called before the first frame update
-    private void Awake() => instance = this;     
+    public bool PlayerExists { get => _playerExists; private set => _playerExists = value; }
 
-    public void SetPlayer(PlayerModel newModel) => _model = newModel;
+    bool _playerExists;
+
+    [SerializeField]PlayerModel _model;
+
+    
+   public event Action OnPlayerSet;
+    // Start is called before the first frame update
+    private void Awake()
+    {
+        instance = this;
+        PlayerExists = false;
+
+    }  
+
+    public void SetPlayer(PlayerModel newModel)
+    {
+        _model = newModel;
+        PlayerExists = true;
+        OnPlayerSet?.Invoke();
+    } 
  
 }
