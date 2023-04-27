@@ -13,26 +13,41 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
     [SerializeField] NetworkRigidbody _ntwkRb;
     [SerializeField] GameObject playerView;
     [SerializeField] Camera _cam;
+    [SerializeField] Animator animator;
 
-    private void Awake()
+
+    public override void Spawned()
     {
+        base.Spawned();
+        Awakea();
+    }
+
+    private void Awakea()
+    {
+        if (!HasInputAuthority) return;
+
+
+        animator = playerView.GetComponent<Animator>();
         _ntwkRb = GetComponent<NetworkRigidbody>();
-        _movement = new Player_Movement(_speed, _ntwkRb, _jumpForce, transform, playerView);
+        _movement = new Player_Movement(_speed, _ntwkRb, _jumpForce, transform, playerView, animator);
         GameManager.instance.SetPlayer(this);
         if (_cam!=null)
         {
             Destroy(Camera.main);
             Camera.SetupCurrent(_cam);
         }
-        //_inputs = new Player_Inputs(_movement);
+        //_inputs = new Player_Inputs(_movement);       
     }  
     
 
     public void TakeDamage(int dmg)
     {
         _life -= dmg;
+        if (_life<=0) GameManager.instance.Defeat();
         //metodo de morir
     }
+
+ 
 
     public void Move(Vector2 input) => _movement.Move(input.y, input.x);
 
@@ -42,7 +57,22 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
 
     public void Aim(Vector2 input) => Debug.Log("el personaje no tiene apuntado");
 
-    private void OnCollisionEnter(Collision collider) => _movement.IsGrounded(collider);
+    private void OnCollisionEnter(Collision collider)
+    {
+        _movement.IsGrounded(collider);
+      
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 7)
+        {
+            GameManager.instance.Defeat();
+        }
+        if (other.gameObject.layer == 8)
+        {
+            GameManager.instance.Victory();
+        }
+    }
 
     public bool InputAuthority() => HasInputAuthority;
 }

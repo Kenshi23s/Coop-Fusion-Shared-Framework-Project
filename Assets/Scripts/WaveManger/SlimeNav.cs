@@ -36,6 +36,7 @@ public class SlimeNav : Entity
             thisAgent.enabled = true;
             Update = SlimeBehaviour;
         };
+
         if (GameManager.instance.PlayerExists)
         {
             Initialize.Invoke();
@@ -75,27 +76,26 @@ public class SlimeNav : Entity
         {
             foreach (var item in targets)
             {
-                item.TakeDamage(_dmg);
+                Debug.Log(item);
+                if (item != null && GetHashCode() != item.GetHashCode() )
+                {
+                    item.TakeDamage(_dmg);
+                }             
             }
-        }       
-     
-        Die();
+        }
+        Debug.Log("Mori");
+        ZombieManager.instance.DespawnSlime(this);
+       
     }
 
 
-    protected override void Die()
-    {
-        Debug.Log("Die");
-        if (Object.HasStateAuthority) 
-        {
-            ZombieManager.instance.SpawnSlime();
-            Object.Runner.Despawn(Object); 
-        } 
-    }
+    protected override void Die() => AOEdmg();
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _hitRange);
     }
 }

@@ -27,13 +27,11 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField]
      int maxSlimes;
 
-    public override void Spawned()
+    public void SpawnSlimes()
     {
-        if (!Object || !Object.HasStateAuthority)
+        if (!Object || !Object.HasStateAuthority && SpawnNetworkPlayer.HasStarted)
             return;
-
         SpawnSlime();
-
     }
 
 
@@ -42,7 +40,10 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     private void Awake()
     {      
         instance = this;
-        spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);       
+        spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);
+        SpawnNetworkPlayer.OnGameModeStart += SpawnSlime;
+
+
     }
 
     Vector3 NearestSpawn()
@@ -57,7 +58,8 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     }
 
     public void SpawnSlime()
-    {       
+    {
+        Debug.Log("CallTrack");
         while (maxSlimes > slimesAlive)
         {
             SlimeNav Slime = BuildSlime();
@@ -69,14 +71,20 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     #region Pool
     SlimeNav BuildSlime() => Object.Runner.Spawn(model);   
 
-    public void OnConnectedToServer(NetworkRunner runner)
+    
+
+    public void DespawnSlime(SlimeNav item) 
     {
-       
-       
-        SpawnSlime();
+        if (slimeList.Contains(item))
+        {
+            slimeList.Remove(item);
+            Runner.Despawn(item.Object);
+            SpawnSlime();
+        } 
+
+      
 
     }
-
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log("Player Join");
@@ -157,6 +165,11 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnConnectedToServer(NetworkRunner runner)
     {
         throw new NotImplementedException();
     }

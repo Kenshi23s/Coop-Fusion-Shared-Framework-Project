@@ -49,10 +49,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
-  life: 0
-  maxLife: 0
+  life: 100
+  maxLife: 100
   explosionRadius: 10
-  _hitRange: 3
+  _hitRange: 3.73
 --- !u!114 &100757557587815290
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,8 +14,8 @@ public abstract class Entity : NetworkBehaviour,IDamagable
     {
        
         life -= dmg;
-        Debug.Log(this.gameObject.name+" " +life);
-        if (life<=0)
+        Debug.Log(this.gameObject.name+" " + life);
+        if (life < 0)
         {
             Die();
         }

@@ -11,14 +11,16 @@ public class Player_Movement
     float _jumpForce;
     float _speed;
     GameObject playerView;
+    Animator anim;
 
-    public Player_Movement(float s, NetworkRigidbody rb, float jf, Transform t,GameObject playerView)
+    public Player_Movement(float s, NetworkRigidbody rb, float jf, Transform t,GameObject playerView,Animator anim)
     {
         _speed = s;
         _rb = rb;
         _jumpForce = jf;
         _transform = t;
         this.playerView = playerView;
+        this.anim = anim;
     }
 
     public void Jump()
@@ -31,10 +33,19 @@ public class Player_Movement
     public void Move(float MovV, float MovH)
     {
         Vector3 direction = new Vector3(MovH, 0, MovV);
+        if (direction!= Vector3.zero)
+        {
+            _rb.Rigidbody.MovePosition(_transform.position + (direction.normalized * _speed * Time.deltaTime));
+            playerView.transform.forward = direction;         
+        }
+        bool running = direction != Vector3.zero ? true : false;
+        anim.SetBool("isRunning", running);
 
-        _rb.Rigidbody.MovePosition(_transform.position + (direction.normalized * _speed * Time.deltaTime));
-        playerView.transform.forward = direction;
-        
+
+
+
+
+
     }
 
     public void IsGrounded(Collision collision)

@@ -20,8 +20,20 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]PlayerModel _model;
 
-    
-   public event Action OnPlayerSet;
+    [SerializeField] GameObject VictoryCanvas;
+    [SerializeField] GameObject DefeatCanvas;
+
+    public void Defeat()
+    {
+        DefeatCanvas.SetActive(true);
+        
+    }
+    public void Victory()
+    {
+        VictoryCanvas.SetActive(true);
+    }
+
+    public event Action OnPlayerSet;
     // Start is called before the first frame update
     private void Awake()
     {

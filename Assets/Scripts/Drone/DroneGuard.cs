@@ -41,12 +41,17 @@ public class DroneGuard : NetworkBehaviour, IModel
     public static event Action OnHit;
     public static event Action OnMiss;
 
-    internal Action _everyTick;
+    Action _everyTick;
 
-    private void Awake()
+    public override void Spawned()
+    {
+        base.Spawned();
+        Awakea();
+    }
+    private void Awakea()
     {
         if (!HasInputAuthority) return;
-        
+
         if (_cam != null)
         {
             Destroy(Camera.main);
@@ -70,17 +75,19 @@ public class DroneGuard : NetworkBehaviour, IModel
         //_myDroneInput = new Input_mouse(_myShootingDrone, _myMovementDrone, _cam);
     }
 
-    void FixedUpdate()
+    public override void FixedUpdateNetwork()
     {
-        //_myDroneInput.ListenInputs();
-
+        base.FixedUpdateNetwork();
         _everyTick?.Invoke();
     }
 
     private void OnDrawGizmos()
     {
+
         if (drawGizmos&& _myCrosshairDrone!=null)
         {
+            if (!HasInputAuthority) return;
+
             DroneGizmos?.Invoke();
             if (Physics.Raycast(_myCrosshairDrone.GetCrossHairScreenRay(), out RaycastHit hit, Mathf.Infinity))
             {

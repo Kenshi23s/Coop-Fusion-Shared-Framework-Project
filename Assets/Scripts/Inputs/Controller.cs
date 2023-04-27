@@ -13,26 +13,26 @@ public abstract class Controller : NetworkBehaviour
     //Action onPhysicsPlayInput;
 
     public void SetModel(IModel model) => this.model = model;
-    private void Awake()
+    public override void Spawned()
     {
+        base.Spawned();
+        Awakea();
+    }
+    private void Awakea()
+    {
+        if (!HasInputAuthority) return;
         SetModel(GetComponentInChildren<IModel>());
-      
+
+     
 
         _fixedUpdateNetwork = () =>
-        {
-          
+        {       
             if (GetInput(out NetworkInputData networkInputData))
             {
-
                 model.Move(networkInputData.movementInput);
                 model.Aim(networkInputData.aimInput);
                 model.Jump(networkInputData.isJumpPressed);
                 model.Shoot(networkInputData.isFirePressed);
-                //model play
-                //onPlayInput?.Invoke();
-                //onPlayInput = null;               
-                //onPhysicsPlayInput?.Invoke();
-                //onPhysicsPlayInput = null;
             }
         };
         SpawnNetworkPlayer.SetInputController(this);
