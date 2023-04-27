@@ -38,18 +38,7 @@ public abstract class Controller : NetworkBehaviour
         SpawnNetworkPlayer.SetInputController(this);
     }
 
-    private void Update()
-    {
-        //if (!model.InputAuthority()) return;
-        
-    }
-
     public override void FixedUpdateNetwork() => _fixedUpdateNetwork?.Invoke();
- 
-  
-    //protected void AddToPlayPhysics(Action action) => onPhysicsPlayInput += action;
-
-    //protected void AddToPlay(Action action) => onPlayInput += action;
 
     public abstract bool ListenInputs(out NetworkInputData data);
 

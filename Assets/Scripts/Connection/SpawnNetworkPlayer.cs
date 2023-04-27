@@ -18,10 +18,8 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 
     static Controller _inputHandler;
     NetworkRunner _currentRunner;
-    private void Awake()
-    {
-        StartCoroutine(TextCoroutine());
-    }
+    private void Awake() => StartCoroutine(TextCoroutine());
+  
     public void OnConnectedToServer(NetworkRunner runner)
     {
         _currentRunner = runner;
@@ -63,19 +61,6 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
             
         }
     }
-    //cada metodo se le asigna al boton correspondiente
-
-    //public void SpawnPlayer()
-    //{
-    //    _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-    //    _panel.gameObject.SetActive(false);
-    //}
-
-    //public void SpawnDrone()
-    //{
-    //    _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-    //    _panel.gameObject.SetActive(false);
-    //}
 
     public void SpawnPlayer(bool arg)
     {
@@ -102,6 +87,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     public static void SetInputController(Controller _newController)
     {
         _inputHandler = _newController;
+        Debug.Log("calltrack");
     }
 
     //aca irian los inputs del jugador
@@ -117,7 +103,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         }
         else if (_inputHandler.ListenInputs(out data))
         {
-          
+           
             input.Set(data);
         }
     }
