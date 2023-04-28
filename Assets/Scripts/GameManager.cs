@@ -61,15 +61,23 @@ public class GameManager : MonoBehaviour
     
         if (Physics.Raycast(ApplyBound(RandomPos),Vector3.down,out RaycastHit hit))
         {
-            if (hit.transform.gameObject.layer!=6)
+            int layer = hit.transform.gameObject.layer;
+           
+         
+            if (layer==6)
             {
+                Debug.Log(hit.transform.gameObject.layer);
                 SpawnNetworkPlayer._currentRunner.Spawn(key, hit.point, Quaternion.identity);
-             
+                Debug.Log("Spawnie");
+                return;
             }
-                   
-            else            
-                SpawnKey();        
+
+            SpawnKey();
+
+            
+               
         }
+        Debug.Log("no choque con nada");
 
     }
 
@@ -78,15 +86,16 @@ public class GameManager : MonoBehaviour
         Vector3 myPos = transform.position;
 
         if (objectPosition.x > width)
-            objectPosition.x = -width + myPos.x;
+            objectPosition.x = -width;
         if (objectPosition.x < -width)
-            objectPosition.x = width + myPos.x;
+            objectPosition.x = width;
 
         if (objectPosition.z > height)
-            objectPosition.z = -height + myPos.z;
+            objectPosition.z = -height;
         if (objectPosition.z < -height)
-            objectPosition.z = height + myPos.z;
-        objectPosition.y = elevation;
+            objectPosition.z = height;
+        objectPosition = new Vector3(objectPosition.x + myPos.x, elevation, objectPosition.z + myPos.z);
+        
         return objectPosition;
     }
 

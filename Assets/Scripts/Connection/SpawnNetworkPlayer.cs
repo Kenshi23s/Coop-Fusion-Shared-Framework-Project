@@ -88,7 +88,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 
     void CheckConnectedPlayers()
     {
-        if (_currentRunner.SessionInfo.PlayerCount > 1)
+        if (_currentRunner.SessionInfo.PlayerCount > 0)
         {
             OnGameModeStart?.Invoke();
             HasStarted = true;
