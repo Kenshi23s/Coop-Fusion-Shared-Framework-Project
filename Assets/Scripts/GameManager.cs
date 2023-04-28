@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     public void Defeat() => DefeatCanvas.SetActive(true);
 
+    []
     public void Victory() => VictoryCanvas.SetActive(true);
 
     public void SetPlayer(PlayerModel newModel)
