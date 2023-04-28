@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6188537134786550024}
   - component: {fileID: 6193358462042282881}
+  - component: {fileID: 5631353838527956550}
   m_Layer: 8
   m_Name: ObjVictoria
   m_TagString: Untagged
@@ -215,6 +216,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2177786, y: 0.41134745, z: 0.17772542}
   m_Center: {x: -0.00000009536743, y: 0.19809616, z: -0.0011780739}
+--- !u!114 &5631353838527956550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194509816801083206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2305
+  NetworkGuid:
+    RawGuidValue: 75efe7e14fec0064c882394977a1eb17
+  NestedObjects: []
+  NetworkedBehaviours: []
+  SimulationBehaviours: []
 --- !u!1 &6194611203701550812
 GameObject:
   m_ObjectHideFlags: 0
