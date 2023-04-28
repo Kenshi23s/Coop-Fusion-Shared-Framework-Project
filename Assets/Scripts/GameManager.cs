@@ -22,16 +22,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject VictoryCanvas;
     [SerializeField] GameObject DefeatCanvas;
+    [Header("Bound")]
+    [SerializeField,Range(0,100)] float width, height, elevation;
 
-    public void Defeat()
-    {
-        DefeatCanvas.SetActive(true);
-        
-    }
-    public void Victory()
-    {
-        VictoryCanvas.SetActive(true);
-    }
+    [SerializeField] GameObject key;
+
+
+
+
+
 
     public event Action OnPlayerSet;
     // Start is called before the first frame update
@@ -39,14 +38,72 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         PlayerExists = false;
+        SpawnNetworkPlayer.OnGameModeStart += SpawnKey;
 
-    }  
+    }
+
+    public void Defeat() => DefeatCanvas.SetActive(true);
+
+    public void Victory() => VictoryCanvas.SetActive(true);
 
     public void SetPlayer(PlayerModel newModel)
     {
         _model = newModel;
         PlayerExists = true;
         OnPlayerSet?.Invoke();
-    } 
- 
+    }
+
+    void SpawnKey()
+    {
+        float xRandom = UnityEngine.Random.Range(-width, width);
+        float zRandom = UnityEngine.Random.Range(-height, height);
+        Vector3 RandomPos = new Vector3(xRandom, 0, zRandom);
+    
+        if (Physics.Raycast(ApplyBound(RandomPos),Vector3.down,out RaycastHit hit))
+        {
+            if (hit.transform.gameObject.layer!=6)
+            {
+                SpawnNetworkPlayer._currentRunner.Spawn(key, hit.point, Quaternion.identity);
+             
+            }
+                   
+            else            
+                SpawnKey();        
+        }
+
+    }
+
+    public Vector3 ApplyBound(Vector3 objectPosition)
+    {
+        Vector3 myPos = transform.position;
+
+        if (objectPosition.x > width)
+            objectPosition.x = -width + myPos.x;
+        if (objectPosition.x < -width)
+            objectPosition.x = width + myPos.x;
+
+        if (objectPosition.z > height)
+            objectPosition.z = -height + myPos.z;
+        if (objectPosition.z < -height)
+            objectPosition.z = height + myPos.z;
+        objectPosition.y = elevation;
+        return objectPosition;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        Vector3 myPos = transform.position;
+
+        Vector3 topLeft  =  new Vector3(-width + myPos.x, elevation,  height + myPos.z);
+        Vector3 topRight =  new Vector3( width + myPos.x, elevation , height + myPos.z);
+        Vector3 botRight =  new Vector3( width + myPos.x, elevation, -height + myPos.z);
+        Vector3 botLeft  =  new Vector3(-width + myPos.x, elevation, -height + myPos.z);
+
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(topRight, botRight);
+        Gizmos.DrawLine(botRight, botLeft);
+        Gizmos.DrawLine(botLeft, topLeft);
+    }
 }

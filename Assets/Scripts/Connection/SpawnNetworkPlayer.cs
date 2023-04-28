@@ -16,8 +16,9 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     [SerializeField] GameObject _panel;
     [SerializeField] Text _loadingText;
 
-   static Controller _inputHandler;
-    NetworkRunner _currentRunner;
+    static Controller _inputHandler;
+    
+    public static NetworkRunner _currentRunner;
 
     public static Action OnGameModeStart;
     public static bool HasStarted; 
@@ -94,7 +95,7 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         }
     }
    
-
+   
     public static void SetInputController(Controller _newController) => _inputHandler = _newController;
  
 
