@@ -53,6 +53,7 @@ public class SlimeNav : Entity
     void SlimeBehaviour()
     {
         thisAgent.SetDestination(ZombieManager.instance.playerPos);
+     
         if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange)
         {
             AOEdmg();

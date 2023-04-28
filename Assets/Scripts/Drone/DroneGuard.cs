@@ -29,7 +29,7 @@ public class DroneGuard : NetworkBehaviour, IModel
 
     #endregion
 
-
+    [SerializeField] UnityEngine.UI.Image _crossHair;
     [SerializeField] Camera _cam;
 
 
@@ -66,7 +66,7 @@ public class DroneGuard : NetworkBehaviour, IModel
         Action<Action> _add = (x) => _everyTick += x;
         Action<Action> _substract = (x) => _everyTick -= x;
 
-        _myCrosshairDrone = new Drone_CrossHair();
+        _myCrosshairDrone = new Drone_CrossHair(_crossHair);
         //primero genero el crosshair pq despues se lo paso al shooting
         _myShootingDrone = new DroneShooting(_cam, _bulletStats, OnHit, OnMiss, _myCrosshairDrone);
         _myMovementDrone = new Drone_Movement(transform, _movementStats, firstNode, _add, _substract);

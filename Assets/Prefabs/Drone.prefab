@@ -260,6 +260,7 @@ MonoBehaviour:
     waypointRadius: 0.5
     movementCD: 1
   firstNode: {fileID: 0}
+  _crossHair: {fileID: 145312121505496705}
   _cam: {fileID: 757014894993096352}
   drawGizmos: 1
 --- !u!1 &6863132146724390799
@@ -279,7 +280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6894821512662862608
 RectTransform:
   m_ObjectHideFlags: 0

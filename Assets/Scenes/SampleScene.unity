@@ -1405,6 +1405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1362019386}
   - component: {fileID: 1362019385}
+  - component: {fileID: 1362019387}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1424,15 +1425,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced909e3006fa3648881d0c83f404224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   firstNode: {fileID: 716217226}
-  playerSpawnPosf: {fileID: 2143518815}
   _model: {fileID: 0}
   VictoryCanvas: {fileID: 2043664992}
   DefeatCanvas: {fileID: 408305342}
+  _waitingPanel: {fileID: 1587349121}
+  _selectPanel: {fileID: 857193635}
+  key: {fileID: 3171655109335544854, guid: e093d90e7a6d3da40a1f545ce04e5c81, type: 3}
   width: 24.6
   height: 36
   elevation: 17.4
-  key: {fileID: 3171655109335544854, guid: e093d90e7a6d3da40a1f545ce04e5c81, type: 3}
 --- !u!4 &1362019386
 Transform:
   m_ObjectHideFlags: 0
@@ -1446,10 +1449,33 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 528201146}
-  - {fileID: 2143518815}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1362019387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362019384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInterest: 1
+  DefaultInterestGroups: []
+  DestroyWhenStateAuthorityLeaves: 0
+  AllowStateAuthorityOverride: 1
+  AoiPositionSource: {fileID: 0}
+  Flags: 2561
+  NetworkGuid:
+    RawGuidValue: 1b434d2e57a44819b66234ab08ff5d7d
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1362019385}
+  SimulationBehaviours: []
 --- !u!1 &1436880946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,37 +2378,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043664992}
   m_CullTransparentMesh: 1
---- !u!1 &2143518814
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2143518815}
-  m_Layer: 0
-  m_Name: PlayerSpawnPos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2143518815
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2143518814}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 47.1, y: 5.64, z: 41.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1362019386}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &8014600790144041980
 MeshCollider:
   m_ObjectHideFlags: 0

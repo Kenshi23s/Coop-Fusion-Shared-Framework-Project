@@ -10,12 +10,16 @@ using UnityEngine.SceneManagement;
 public class NetworkRunnerHandler : MonoBehaviour
 {
     NetworkRunner _networkRunner;
+
     [SerializeField] Scene _scene;
+
+    public static NetworkRunner instance;
 
     private void Awake()
     {
         _networkRunner = GetComponent<NetworkRunner>();
-        
+        instance = _networkRunner;
+
         //El network runner inicializa una sala, en la que le especificamos que va a ser de tipo Shared y qué escena queremos cargar
         var clientTask = InitializeNetworkRunner(_networkRunner, GameMode.Shared, SceneManager.GetActiveScene().buildIndex);
            

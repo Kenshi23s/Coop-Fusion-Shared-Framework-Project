@@ -29,7 +29,7 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void SpawnSlimes()
     {
-        if (!Object || !Object.HasStateAuthority && SpawnNetworkPlayer.HasStarted)
+        if (!Object || !Object.HasStateAuthority && GameManager._hasStarted)
             return;
         SpawnSlime();
     }
@@ -41,7 +41,7 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     {      
         instance = this;
         spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);
-        SpawnNetworkPlayer.OnGameModeStart += SpawnSlime;
+        GameManager.OnGameModeStart += SpawnSlime;
 
 
     }

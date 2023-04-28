@@ -27,7 +27,7 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
         if (!HasInputAuthority) return;
 
 
-        animator = playerView.GetComponent<Animator>();
+       
         _ntwkRb = GetComponent<NetworkRigidbody>();
         _movement = new Player_Movement(_speed, _ntwkRb, _jumpForce, transform, playerView, animator);
         GameManager.instance.SetPlayer(this);

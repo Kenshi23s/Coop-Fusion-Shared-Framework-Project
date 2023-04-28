@@ -2,18 +2,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Drone_CrossHair
-{
-  
+{  
     public static float speed=1000;
-    //public static Drone_CrossHair instance;
 
     Image Crosshair;
 
-    public Drone_CrossHair()
+    public Drone_CrossHair(Image Crosshair)
     {
         //instance = this;
         // no deberia usar tags, pero por el momento...
-        Crosshair = GameObject.Find("Crosshair").GetComponent<Image>();
+        this.Crosshair = Crosshair;
+        Crosshair.gameObject.SetActive(true);
     }
  
     public void AddCrossHairPos(Vector2 newPos)
@@ -28,11 +27,6 @@ public class Drone_CrossHair
         Crosshair.transform.position = Vector3.Slerp(Crosshair.transform.position, addPos, t);
 
         Crosshair.transform.position = CheckOutOfBounds(Crosshair.transform.position);
-
-
-
-
-
     }
     //chequea que la mira no se pase de la pantalla
     Vector3 CheckOutOfBounds(Vector2 myPos)

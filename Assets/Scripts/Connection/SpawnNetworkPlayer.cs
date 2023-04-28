@@ -18,10 +18,9 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 
     static Controller _inputHandler;
     
-    public static NetworkRunner _currentRunner;
+    NetworkRunner _currentRunner;
 
-    public static Action OnGameModeStart;
-    public static bool HasStarted; 
+
 
 
     private void Awake() => StartCoroutine(TextCoroutine());
@@ -72,28 +71,21 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
     {
         if (arg)
         {
-            _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-            CheckConnectedPlayers();
+            _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);      
         }
         else if(!arg)
         {
             _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-            CheckConnectedPlayers();
-
         }
 
-        Destroy(_panel.gameObject);
+       GameManager.instance.RPC_CheckConnectedPlayers();
+
+
+       
         //_panel.gameObject.SetActive(false);
     }
 
-    void CheckConnectedPlayers()
-    {
-        if (_currentRunner.SessionInfo.PlayerCount > 0)
-        {
-            OnGameModeStart?.Invoke();
-            HasStarted = true;
-        }
-    }
+    
    
    
     public static void SetInputController(Controller _newController) => _inputHandler = _newController;

@@ -210,6 +210,7 @@ MonoBehaviour:
   _ntwkRb: {fileID: 7298470164935906385}
   playerView: {fileID: 7926263015358093191}
   _cam: {fileID: 5767532634917206661}
+  animator: {fileID: 7926263015348708425}
 --- !u!114 &7298470164935906385
 MonoBehaviour:
   m_ObjectHideFlags: 0

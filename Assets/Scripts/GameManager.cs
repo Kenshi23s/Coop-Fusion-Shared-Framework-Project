@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using Fusion;
+using UnityEngine.UIElements;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     [SerializeField] public Node firstNode;
 
     public static GameManager instance;
-
-    [SerializeField] Transform playerSpawnPosf;
 
     public PlayerModel model=> _model;
 
@@ -18,34 +18,69 @@ public class GameManager : MonoBehaviour
 
     bool _playerExists;
 
-    [SerializeField]PlayerModel _model;
+    [SerializeField] PlayerModel _model;
 
+    #region Canvas
+    [Header("Canvas")]
     [SerializeField] GameObject VictoryCanvas;
     [SerializeField] GameObject DefeatCanvas;
-    [Header("Bound")]
-    [SerializeField,Range(0,100)] float width, height, elevation;
+    [SerializeField] GameObject _waitingPanel;
+    [SerializeField] GameObject _selectPanel;
+    #endregion
+
 
     [SerializeField] GameObject key;
 
-
-
-
+    [Header("Bound")]
+    [SerializeField, Range(0, 100)] float width, height, elevation;
 
 
     public event Action OnPlayerSet;
-    // Start is called before the first frame update
+
+    public static Action OnGameModeStart;
+    public static bool _hasStarted;
+
+
+
+
     private void Awake()
     {
         instance = this;
         PlayerExists = false;
-        SpawnNetworkPlayer.OnGameModeStart += SpawnKey;
+        OnGameModeStart += SpawnKey;
 
     }
+    
+    public void Defeat()  => RPC_GameOver(false);
 
-    public void Defeat() => DefeatCanvas.SetActive(true);
+    public void Victory() => RPC_GameOver(true);
 
-    []
-    public void Victory() => VictoryCanvas.SetActive(true);
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_GameOver(NetworkBool win)
+    {
+        if (win) VictoryCanvas.SetActive(true); else DefeatCanvas.SetActive(true);
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void RPC_CheckConnectedPlayers()
+    {
+        
+        
+        if (NetworkRunnerHandler.instance.SessionInfo.PlayerCount > 1)
+        {
+            _hasStarted = true;
+            Destroy(_selectPanel.gameObject);
+            Destroy(_waitingPanel);
+            OnGameModeStart?.Invoke();
+            Debug.Log("Destroy");
+           
+
+        }
+        else
+        {
+            _waitingPanel.SetActive(true);
+        }
+    }
 
     public void SetPlayer(PlayerModel newModel)
     {
@@ -56,24 +91,25 @@ public class GameManager : MonoBehaviour
 
     void SpawnKey()
     {
+        if (!HasStateAuthority) return;
+        
+
+        
         float xRandom = UnityEngine.Random.Range(-width, width);
         float zRandom = UnityEngine.Random.Range(-height, height);
         Vector3 RandomPos = new Vector3(xRandom, 0, zRandom);
     
         if (Physics.Raycast(ApplyBound(RandomPos),Vector3.down,out RaycastHit hit))
         {
-            int layer = hit.transform.gameObject.layer;
-           
+            int layer = hit.transform.gameObject.layer;          
          
-            if (layer==6)
-            {
-                Debug.Log(hit.transform.gameObject.layer);
-                SpawnNetworkPlayer._currentRunner.Spawn(key, hit.point, Quaternion.identity);
-                Debug.Log("Spawnie");
-                return;
-            }
+            if (layer!=6) SpawnKey();
+            
+            Debug.Log(hit.transform.gameObject.layer);
+            NetworkRunnerHandler.instance.Spawn(key, hit.point, Quaternion.identity);
+         
 
-            SpawnKey();
+            
 
             
                
