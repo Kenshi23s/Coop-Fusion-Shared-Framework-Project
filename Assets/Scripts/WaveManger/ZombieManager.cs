@@ -27,12 +27,7 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField]
      int maxSlimes;
 
-    public void SpawnSlimes()
-    {
-        if (!Object || !Object.HasStateAuthority && GameManager._hasStarted)
-            return;
-        SpawnSlime();
-    }
+   
 
 
    
@@ -48,28 +43,32 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     Vector3 NearestSpawn()
     {
-        if (GameManager.instance.PlayerExists)       
-          return ColomboMethods.GetNearest(spawns, playerPos).position;
-        
-        else       
-            return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length)).First().position;
+        if (GameManager.instance.PlayerExists)
+            return spawns[0].position;
+
+        else
+            return spawns[0].position;
+            //return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length-1)).First().position;
         
       
     }
 
     public void SpawnSlime()
     {
+        if (!Object || !Object.HasStateAuthority && GameManager._hasStarted)
+            return;
+      
         Debug.Log("CallTrack");
         while (maxSlimes > slimesAlive)
         {
             SlimeNav Slime = BuildSlime();
             slimeList.Add(Slime);
-            Slime.transform.position = NearestSpawn();
+            //Slime.transform.position = NearestSpawn();
         }
     }
     
     #region Pool
-    SlimeNav BuildSlime() => Object.Runner.Spawn(model);   
+    SlimeNav BuildSlime() => Object.Runner.Spawn(model, NearestSpawn());   
 
     
 
@@ -89,10 +88,6 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log("Player Join");
         SpawnSlime();
-        if (runner.SessionInfo.PlayerCount>1)
-        {
-           
-        }
     }
 
    

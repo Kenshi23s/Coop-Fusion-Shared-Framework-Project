@@ -25,12 +25,8 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
     private void Awakea()
     {
         if (!HasInputAuthority)
-        {
-            Destroy(_cam);
-            return;
-        }
-
-
+        {Destroy(_cam); return;}
+        
 
         foreach (var item in Camera.allCameras)
         {
@@ -69,6 +65,7 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
     private void OnCollisionEnter(Collision collider)
     {
         if (!HasInputAuthority) return;
+
         _movement.IsGrounded(collider);
       
     }
@@ -76,14 +73,10 @@ public class PlayerModel : NetworkBehaviour , IDamagable, IModel
     {
         if (!HasInputAuthority) return;
        
-        if (other.gameObject.layer == 7)
-        {
-            GameManager.instance.Defeat();
-        }
-        if (other.gameObject.layer == 8)
-        {
-            GameManager.instance.Victory();
-        }
+        if (other.gameObject.layer == 7) GameManager.instance.Defeat();
+
+        if (other.gameObject.layer == 8) GameManager.instance.Victory();
+       
     }
 
     public bool InputAuthority() => HasInputAuthority;

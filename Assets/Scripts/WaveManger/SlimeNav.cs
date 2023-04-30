@@ -20,20 +20,54 @@ public class SlimeNav : Entity
     //public void InitializeZombie(Action<ZombieNav> ReturnMethod) => this.ReturnMethod = ReturnMethod;
     Action Update;
     
-    private void Awake()
-    {
-        if (!HasStateAuthority) return;
-   
-        
+    //private void Awake()
+    //{
        
 
+    //    Action Initialize = () =>
+    //    {
+    //        if (!ZombieManager.instance.hass) { Debug.Log("slime NO tiene autoridad"); return; }
+
+    //        Debug.Log("slime tiene autoridad");
+
+    //        if (TryGetComponent(out NavMeshAgent agent))
+    //        {
+    //            Destroy(agent);
+
+    //        }
+    //        thisAgent.updatePosition= false;
+    //        thisAgent = gameObject.AddComponent<NavMeshAgent>();
+    //        thisAgent.enabled = false;
+
+    //        thisAgent.enabled = true;
+    //        Update = SlimeBehaviour;
+    //    };
+
+    //    if (GameManager.instance.PlayerExists)
+    //    {
+    //        Initialize.Invoke();
+    //    }
+    //    else
+    //    {
+    //        GameManager.instance.OnPlayerSet += () => 
+    //        {
+    //            Initialize.Invoke();
+    //        };
+    //    }
+    //}
+    public override void Spawned()
+    {
+        base.Spawned();
         Action Initialize = () =>
         {
+           
+
             if (TryGetComponent(out NavMeshAgent agent))
             {
                 Destroy(agent);
 
             }
+            thisAgent.updatePosition = false;
             thisAgent = gameObject.AddComponent<NavMeshAgent>();
             thisAgent.enabled = false;
 
@@ -47,7 +81,7 @@ public class SlimeNav : Entity
         }
         else
         {
-            GameManager.instance.OnPlayerSet += () => 
+            GameManager.instance.OnPlayerSet += () =>
             {
                 Initialize.Invoke();
             };
@@ -62,11 +96,11 @@ public class SlimeNav : Entity
     }
 
     void SlimeBehaviour()
-    {
-        if (!HasStateAuthority) return;
-        
+    {      
 
-        
+
+        Debug.Log("Slime Movement Con State Authority");
+
         thisAgent.SetDestination(ZombieManager.instance.playerPos);  
         if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange) AOEdmg();
 

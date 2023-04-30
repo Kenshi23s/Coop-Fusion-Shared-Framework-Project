@@ -17,19 +17,14 @@ public class Node : MonoBehaviour
     public static NodeDirection GetDirectionNode(Vector2 move)
     {
          
-        if (move.x > 0 )
-            return NodeDirection.Right;
-        
-        if (move.x < 0)
-            return NodeDirection.Left;     
-        
-        if (move.y > 0)
-            return NodeDirection.Up;
-        
-        if (move.y < 0)      
-            return NodeDirection.Down;
-        
-            return NodeDirection.None;
+        if (move.x > 0) return NodeDirection.Right;
+        if (move.x < 0) return NodeDirection.Left;
+
+        if (move.y > 0) return NodeDirection.Up;
+        if (move.y < 0) return NodeDirection.Down;
+
+
+        return NodeDirection.None;
     }
 
     [SerializeField]List< NeihgborNode> neihgborNodes=new List<NeihgborNode>();

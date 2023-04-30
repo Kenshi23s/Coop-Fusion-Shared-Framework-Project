@@ -14,9 +14,9 @@ public class GameManager : NetworkBehaviour
 
     public PlayerModel model=> _model;
 
-    public bool PlayerExists { get => _playerExists; private set => _playerExists = value; }
-
-    bool _playerExists;
+    public NetworkBool PlayerExists { get => _playerExists; private set => _playerExists = value; }
+ 
+    NetworkBool _playerExists;
 
     [SerializeField] PlayerModel _model;
 
@@ -57,7 +57,7 @@ public class GameManager : NetworkBehaviour
         if (NetworkRunnerHandler.instance.SessionInfo.PlayerCount > 1)
         {
             RPC_StartGame();
-
+           
         }
         else
         {
