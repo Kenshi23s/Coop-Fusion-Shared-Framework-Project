@@ -9,8 +9,6 @@ public class Drone_CrossHair
 
     public Drone_CrossHair(Image Crosshair)
     {
-        //instance = this;
-        // no deberia usar tags, pero por el momento...
         this.Crosshair = Crosshair;
         Crosshair.gameObject.SetActive(true);
     }

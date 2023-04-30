@@ -69,27 +69,26 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
 
     public void SpawnPlayer(bool arg)
     {
-        if (arg)
-        {
-            _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);      
-        }
-        else if(!arg)
-        {
-            _currentRunner.Spawn(_dronePrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
-        }
 
-       GameManager.instance.RPC_CheckConnectedPlayers();
+        #region Obsoolete
+        //if (arg)      
+        //    _currentRunner.Spawn(_playerPrefab, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);             
+        //else if(!arg)
 
+        #endregion
+        NetworkPlayer PlayerToSpawn = arg ? _playerPrefab : _dronePrefab;
+        _currentRunner.Spawn(PlayerToSpawn, Vector3.zero, Quaternion.identity, _currentRunner.LocalPlayer);
+   
 
-       
+        GameManager.instance.CheckConnectedPlayers();     
         //_panel.gameObject.SetActive(false);
     }
 
-    
-   
-   
+
+    #region Input
+
     public static void SetInputController(Controller _newController) => _inputHandler = _newController;
- 
+
 
     //aca irian los inputs del jugador
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -104,10 +103,12 @@ public class SpawnNetworkPlayer : MonoBehaviour , INetworkRunnerCallbacks
         }
         else if (_inputHandler.ListenInputs(out data))
         {
-           
+
             input.Set(data);
         }
     }
+    #endregion
+
     #region CALLBACKS SIN USAR
 
 

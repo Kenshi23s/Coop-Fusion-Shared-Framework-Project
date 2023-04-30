@@ -17,7 +17,7 @@ public class DroneGuard : NetworkBehaviour, IModel
     #region Movement Components
     Drone_Movement _myMovementDrone;
     [SerializeField] DroneMovementStats _movementStats;
-    [SerializeField] Node firstNode;
+    Node firstNode;
 
     #endregion
 
@@ -50,18 +50,26 @@ public class DroneGuard : NetworkBehaviour, IModel
     }
     private void Awakea()
     {
-        if (!HasInputAuthority) return;
-
-        if (_cam != null)
+        if (!HasInputAuthority)        
         {
-            Destroy(Camera.main);
-            Camera.SetupCurrent(_cam);
-            firstNode = GameManager.instance.firstNode;
-            transform.position = firstNode.transform.position;
-
-
+            Destroy(_cam);
+            return;
         }
 
+        Debug.Log("Tengo Input Authority en drone");
+        foreach (var item in Camera.allCameras)
+        {
+           
+            if (item == _cam) continue;
+            Destroy(item);
+          
+        }
+
+
+
+
+        firstNode = GameManager.instance.firstNode;
+        transform.position = firstNode.transform.position;
 
         Action<Action> _add = (x) => _everyTick += x;
         Action<Action> _substract = (x) => _everyTick -= x;

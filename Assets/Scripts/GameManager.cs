@@ -40,44 +40,29 @@ public class GameManager : NetworkBehaviour
     public static Action OnGameModeStart;
     public static bool _hasStarted;
 
-
-
-
     private void Awake()
     {
         instance = this;
         PlayerExists = false;
         OnGameModeStart += SpawnKey;
-
     }
     
     public void Defeat()  => RPC_GameOver(false);
 
     public void Victory() => RPC_GameOver(true);
-
-    [Rpc(RpcSources.All, RpcTargets.All)]
-    public void RPC_GameOver(NetworkBool win)
-    {
-        if (win) VictoryCanvas.SetActive(true); else DefeatCanvas.SetActive(true);
-    }
-
-    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void RPC_CheckConnectedPlayers()
-    {
-        
+ 
+    public void CheckConnectedPlayers()
+    {      
         
         if (NetworkRunnerHandler.instance.SessionInfo.PlayerCount > 1)
         {
-            _hasStarted = true;
-            Destroy(_selectPanel.gameObject);
-            Destroy(_waitingPanel);
-            OnGameModeStart?.Invoke();
-            Debug.Log("Destroy");
-           
+            RPC_StartGame();
 
         }
         else
         {
+            Debug.Log("A");
+            _selectPanel.SetActive(false);
             _waitingPanel.SetActive(true);
         }
     }
@@ -89,6 +74,25 @@ public class GameManager : NetworkBehaviour
         OnPlayerSet?.Invoke();
     }
 
+    #region RPC_CALLS
+    [Rpc(RpcSources.Proxies, RpcTargets.All)]
+    void RPC_StartGame()
+    {
+        _hasStarted = true;
+        Destroy(_selectPanel.gameObject);
+        Destroy(_waitingPanel);
+        OnGameModeStart?.Invoke();
+        Debug.Log("RPC START");
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    public void RPC_GameOver(NetworkBool win)
+    {
+        if (win) VictoryCanvas.SetActive(true); else DefeatCanvas.SetActive(true);
+    }
+    #endregion 
+
+    #region KeySpawn
     void SpawnKey()
     {
         if (!HasStateAuthority) return;
@@ -152,4 +156,5 @@ public class GameManager : NetworkBehaviour
         Gizmos.DrawLine(botRight, botLeft);
         Gizmos.DrawLine(botLeft, topLeft);
     }
+    #endregion
 }

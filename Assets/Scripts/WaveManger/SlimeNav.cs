@@ -22,17 +22,21 @@ public class SlimeNav : Entity
     
     private void Awake()
     {
+        if (!HasStateAuthority) return;
+   
+        
        
-        if (TryGetComponent(out NavMeshAgent agent))
-        {
-            Destroy(agent);
-            
-        }
-        thisAgent = gameObject.AddComponent<NavMeshAgent>();
-        thisAgent.enabled = false;
 
         Action Initialize = () =>
         {
+            if (TryGetComponent(out NavMeshAgent agent))
+            {
+                Destroy(agent);
+
+            }
+            thisAgent = gameObject.AddComponent<NavMeshAgent>();
+            thisAgent.enabled = false;
+
             thisAgent.enabled = true;
             Update = SlimeBehaviour;
         };
@@ -49,16 +53,6 @@ public class SlimeNav : Entity
             };
         }
     }
-  
-    void SlimeBehaviour()
-    {
-        thisAgent.SetDestination(ZombieManager.instance.playerPos);
-     
-        if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange)
-        {
-            AOEdmg();
-        }
-    }
 
     public override void FixedUpdateNetwork()
     {
@@ -66,6 +60,19 @@ public class SlimeNav : Entity
 
         Update?.Invoke();
     }
+
+    void SlimeBehaviour()
+    {
+        if (!HasStateAuthority) return;
+        
+
+        
+        thisAgent.SetDestination(ZombieManager.instance.playerPos);  
+        if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange) AOEdmg();
+
+    }
+
+   
 
     void AOEdmg()
     {

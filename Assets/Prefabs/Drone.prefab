@@ -258,8 +258,7 @@ MonoBehaviour:
   _movementStats:
     speed: 2
     waypointRadius: 0.5
-    movementCD: 1
-  firstNode: {fileID: 0}
+    movementCD: 0.3
   _crossHair: {fileID: 145312121505496705}
   _cam: {fileID: 757014894993096352}
   drawGizmos: 1

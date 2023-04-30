@@ -52,6 +52,7 @@ public class Drone_Movement
    
    public void SetDirection(NodeDirection direction)
    {
+        Debug.Log("Set Direction");
         if (CanMove() && CheckDirection(direction))
         {
            
@@ -63,6 +64,7 @@ public class Drone_Movement
     
     void MoveDrone()
     {
+        Debug.Log("Move");
         if (_nextNode!=null)
         {
             Vector3 dir = _nextNode.transform.position - myTransform.position;
