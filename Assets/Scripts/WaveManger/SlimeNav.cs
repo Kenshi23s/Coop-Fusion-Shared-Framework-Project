@@ -100,7 +100,7 @@ public class SlimeNav : Entity
 
 
         Debug.Log("Slime Movement Con State Authority");
-
+       
         thisAgent.SetDestination(ZombieManager.instance.playerPos);  
         if (Vector3.Distance(ZombieManager.instance.playerPos, transform.position) < _hitRange) AOEdmg();
 

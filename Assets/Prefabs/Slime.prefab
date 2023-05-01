@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 100757557587815290}
   - component: {fileID: 4979602917212862201}
   - component: {fileID: 8801030877071705297}
+  - component: {fileID: 25819755816570270}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -77,6 +78,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 7759255043673928932}
   - {fileID: 4979602917212862201}
+  - {fileID: 25819755816570270}
   SimulationBehaviours: []
 --- !u!114 &4979602917212862201
 MonoBehaviour:
@@ -121,6 +123,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9468842, y: 1.783037, z: 1}
   m_Center: {x: 0.08367157, y: 1.277568, z: 0.27999997}
+--- !u!114 &25819755816570270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100757557587815291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 100757557587815239}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
+  UseLegacySharedModeInterpolation: 0
+  TargetInterpolationDelay: 0.03
 --- !u!1001 &100757555978600477
 PrefabInstance:
   m_ObjectHideFlags: 0
