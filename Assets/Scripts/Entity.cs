@@ -11,15 +11,15 @@ public abstract class Entity : NetworkBehaviour,IDamagable
     public event Action damageCallBack;
 
     public void TakeDamage(int dmg)
-    {
-        damageCallBack?.Invoke();
+    {  
         RPC_TakeDamage(dmg);
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.All)]
     void RPC_TakeDamage(int dmg)
     {
-        if(!Object.HasStateAuthority) return;
+        damageCallBack?.Invoke();
+        if (!Object.HasStateAuthority) return;
 
         life -= dmg;
         Debug.Log(this.gameObject.name + " " + life);

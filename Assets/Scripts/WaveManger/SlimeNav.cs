@@ -24,6 +24,7 @@ public class SlimeNav : Entity
  
     public override void Spawned()
     {
+        damageCallBack += PlayParticleOnDamage;
         if (!Object.HasStateAuthority) return;
               
         base.Spawned();
@@ -31,12 +32,12 @@ public class SlimeNav : Entity
         {
          
             Update = SlimeBehaviour;
-            damageCallBack += PlayParticleOnDamage;
+           
         };
 
         if (GameManager.instance.PlayerExists) Initialize.Invoke();
 
-        else GameManager.instance.OnPlayerSet += () =>
+        else GameManager.OnGameModeStart += () =>
         {
             Initialize.Invoke();
         };
@@ -63,7 +64,8 @@ public class SlimeNav : Entity
 
     void PlayParticleOnDamage()
     {
-        Instantiate(_shootPS, _PSTransform.position, Quaternion.identity);
+       GameObject b = Instantiate(_shootPS, _PSTransform.position, Quaternion.identity).gameObject;
+        Debug.Log("Particle");
     }
    
 

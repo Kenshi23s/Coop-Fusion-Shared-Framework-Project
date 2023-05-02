@@ -36,11 +36,8 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
 
     Vector3 NearestSpawn()
     {
-        if (GameManager.instance.PlayerExists)
-            return spawns[0].position;
-        else
-            return spawns[0].position;
-        //return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length-1)).First().position;     
+      
+        return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length-1)).First().position;     
     }
 
     public void SpawnSlime()
