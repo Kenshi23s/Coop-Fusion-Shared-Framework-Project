@@ -11,6 +11,8 @@ public class SlimeNav : Entity
     NavMeshAgent thisAgent;
    
     [SerializeField] float explosionRadius, _hitRange;
+    [SerializeField] ParticleSystem _shootPS;
+    [SerializeField] Transform _PSTransform;
     int _dmg;
     
 
@@ -29,7 +31,7 @@ public class SlimeNav : Entity
         {
          
             Update = SlimeBehaviour;
-            //damageCallBack +=
+            damageCallBack += PlayParticleOnDamage;
         };
 
         if (GameManager.instance.PlayerExists) Initialize.Invoke();
@@ -59,6 +61,10 @@ public class SlimeNav : Entity
 
     }
 
+    void PlayParticleOnDamage()
+    {
+        Instantiate(_shootPS, _PSTransform.position, Quaternion.identity);
+    }
    
 
     void AOEdmg()

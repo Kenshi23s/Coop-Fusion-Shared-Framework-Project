@@ -14,9 +14,8 @@ public abstract class Entity : NetworkBehaviour,IDamagable
     {
         damageCallBack?.Invoke();
         RPC_TakeDamage(dmg);
-
-
     }
+
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     void RPC_TakeDamage(int dmg)
     {
