@@ -25,37 +25,27 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
     public Vector3 playerPos => GameManager.instance.model.transform.position;
 
     [SerializeField]
-     int maxSlimes;
-
-   
-
-
-   
+     int maxSlimes;  
 
     private void Awake()
     {      
         instance = this;
         spawns = ColomboMethods.GetChildrenComponents<Transform>(transform);
         GameManager.OnGameModeStart += SpawnSlime;
-
-
     }
 
     Vector3 NearestSpawn()
     {
         if (GameManager.instance.PlayerExists)
             return spawns[0].position;
-
         else
             return spawns[0].position;
-            //return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length-1)).First().position;
-        
-      
+            //return spawns.Skip(UnityEngine.Random.Range(0,spawns.Length-1)).First().position;     
     }
 
     public void SpawnSlime()
     {
-        if (!Object || !Object.HasStateAuthority && GameManager._hasStarted)
+        if (!Object || !Object.HasStateAuthority )
             return;
       
         Debug.Log("CallTrack");
@@ -84,6 +74,7 @@ public class ZombieManager : NetworkBehaviour, INetworkRunnerCallbacks
       
 
     }
+    #region CallBacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.Log("Player Join");

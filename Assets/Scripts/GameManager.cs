@@ -38,7 +38,7 @@ public class GameManager : NetworkBehaviour
     public event Action OnPlayerSet;
 
     public static Action OnGameModeStart;
-    public static bool _hasStarted;
+
 
     private void Awake()
     {
@@ -78,7 +78,7 @@ public class GameManager : NetworkBehaviour
     [Rpc(RpcSources.Proxies, RpcTargets.All)]
     void RPC_StartGame()
     {
-        _hasStarted = true;
+      
         Destroy(_selectPanel.gameObject);
         Destroy(_waitingPanel);
         OnGameModeStart?.Invoke();
