@@ -205,7 +205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _life: 100
-  _speed: 50
+  _speed: 25
   _jumpForce: 5
   _ntwkRb: {fileID: 7298470164935906385}
   playerView: {fileID: 7926263015358093191}
